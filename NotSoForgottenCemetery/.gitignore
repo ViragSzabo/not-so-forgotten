@@ -1,0 +1,31 @@
+﻿# Build and user-specific
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and cache
+*.log
+.vs/
+.vscode/
+*.db-shm
+*.db-wal
+
+# Maui specifics
+Platforms/Android/bin/
+Platforms/Android/obj/
+Platforms/iOS/bin/
+Platforms/iOS/obj/
+
+# Environment and secrets
+appsettings.json
+secrets.json
+*.pfx
+*.key
+*.keystore
+
+# OS files
+Thumbs.db
+.DS_Store
