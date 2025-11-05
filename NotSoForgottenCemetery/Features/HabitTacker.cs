@@ -8,7 +8,7 @@ namespace NotSoForgottenCemetery.Features
     public class HabitTracker
     {
         // In-memory list to store habits
-        private readonly List<Habit> _habits = new List<Habit>();
+        private readonly List<Habit> _habits = [];
 
         // Method to add a new habit
         public void AddHabit(Habit habit) => _habits.Add(habit);
@@ -18,5 +18,25 @@ namespace NotSoForgottenCemetery.Features
         
         // Method to get all habits
         public List<Habit> GetAllHabits() => _habits;
+
+        internal void CompleteHabit(Guid habitId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal double GetHabitProgress(Guid habitId)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void ClearHabits()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void DisplayHabits()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

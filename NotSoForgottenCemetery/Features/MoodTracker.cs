@@ -42,5 +42,25 @@ namespace NotSoForgottenCemetery.Features
         {
             _entries.Clear();
         }
+
+        internal void LogMood(MoodEntry moodEntry)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal List<MoodEntry> GetMoodHistory(DateTime from, DateTime to)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void ClearMoods()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void DisplayMoods()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

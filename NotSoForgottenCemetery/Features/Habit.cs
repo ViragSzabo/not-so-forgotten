@@ -5,23 +5,13 @@ using System.Text;
 
 namespace NotSoForgottenCemetery.Features
 {
-    public class Habit
+    public class Habit(string title, string description)
     {
-        public Guid Id { get; private set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int Streak { get; private set; }
-        public DateTime? LastCompleted { get; private set; }
-
-        // Constructor
-        public Habit(string title, string description)
-        {
-            Id = Guid.NewGuid();
-            Title = title;
-            Description = description;
-            Streak = 0;
-            LastCompleted = null;
-        }
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Title { get; set; } = title;
+        public string Description { get; set; } = description;
+        public int Streak { get; private set; } = 0;
+        public DateTime? LastCompleted { get; private set; } = null;
 
         // Method to mark the habit as completed
         public void Complete()

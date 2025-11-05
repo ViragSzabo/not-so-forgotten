@@ -2,10 +2,12 @@
 using Microsoft.Maui.Authentication; // MAUI Essentials WebAuthenticator
 using Microsoft.Maui.Dispatching;   // for MainThread
 using Microsoft.Maui.Storage;       // for SecureStorage
-using SociallyAnxiousHub.Features;
+using NotSoForgottenCemetery.Features;
+using NotSoForgottenCemetery.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography; // for SHA256 + RNG
@@ -13,9 +15,9 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace NotSoForgottenCemetery.Services.Database
+namespace NotSoForgottenCemetery.Services
 {
-    class SpotifyService
+    public class SpotifyService
     {
         private string _accessToken;
         private string _refreshToken;
@@ -23,8 +25,8 @@ namespace NotSoForgottenCemetery.Services.Database
         private string _clientId;
         private DateTime _accessTokenExpiresAtUtc; // UTC time when token expires
 
-        private readonly HttpClient _httpClient = new HttpClient();
-        private readonly SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
+        private readonly HttpClient _httpClient = new();
+        private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
         private const string TOKEN_URL = "https://accounts.spotify.com/api/token";
         private const string API_BASE_URL = "https://api.spotify.com/v1/";
@@ -113,9 +115,9 @@ namespace NotSoForgottenCemetery.Services.Database
             var content = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(content);
 
-            _accessToken = tokenResponse.access_token;
-            _refreshToken = tokenResponse.refresh_token;
-            _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.expires_in - 30); // buffer 30s
+            _accessToken = tokenResponse.Access_token;
+            _refreshToken = tokenResponse.Refresh_token;
+            _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.Expires_in - 30); // buffer 30s
 
             // store securely
             await SecureStorage.SetAsync("spotify_access_token", _accessToken ?? "");
@@ -155,8 +157,8 @@ namespace NotSoForgottenCemetery.Services.Database
                 var content = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(content);
 
-                _accessToken = tokenResponse.access_token;
-                _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.expires_in - 30);
+                _accessToken = tokenResponse.Access_token;
+                _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.Expires_in - 30);
 
                 await SecureStorage.SetAsync("spotify_access_token", _accessToken ?? "");
                 await SecureStorage.SetAsync("spotify_access_token_expires_at_utc", _accessTokenExpiresAtUtc.ToString("o"));
@@ -216,7 +218,7 @@ namespace NotSoForgottenCemetery.Services.Database
                 if (!response.IsSuccessStatusCode)
                 {
                     Console.WriteLine($"Spotify search failed: {response.StatusCode}");
-                    return new List<Song>();
+                    return [];
                 }
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -234,7 +236,7 @@ namespace NotSoForgottenCemetery.Services.Database
                         var cover = item.GetProperty("album").GetProperty("images").EnumerateArray().FirstOrDefault().GetProperty("url").GetString() ?? "";
                         var spotifyUrl = item.GetProperty("external_urls").GetProperty("spotify").GetString() ?? "";
 
-                        list.Add(new Song(title, artist, album, duration, "Unknown", cover, spotifyUrl));
+                        list.Add(new Song(title, artist, duration, album, cover, spotifyUrl));
                     }
                 }
 
@@ -243,17 +245,17 @@ namespace NotSoForgottenCemetery.Services.Database
             catch (InvalidOperationException)
             {
                 // Not authenticated
-                return new List<Song>();
+                return [];
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"SearchSongsAsync error: {ex.Message}");
-                return new List<Song>();
+                return [];
             }
         }
 
         // Helpers / models
-        private string GenerateCodeVerifier()
+        private static string GenerateCodeVerifier()
         {
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~";
             var bytes = new byte[128];
@@ -265,20 +267,19 @@ namespace NotSoForgottenCemetery.Services.Database
             return new string(result);
         }
 
-        private string GenerateCodeChallenge(string codeVerifier)
+        private static string GenerateCodeChallenge(string codeVerifier)
         {
-            using var sha256 = SHA256.Create();
-            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(codeVerifier));
+            var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(codeVerifier));
             var base64 = Convert.ToBase64String(bytes);
             return base64.Replace('+', '-').Replace('/', '_').Replace("=", "");
         }
 
         private class TokenResponse
         {
-            public string access_token { get; set; }
-            public string token_type { get; set; }
-            public int expires_in { get; set; }
-            public string refresh_token { get; set; }
+            public string Access_token { get; set; }
+            public string Token_type { get; set; }
+            public int Expires_in { get; set; }
+            public string Refresh_token { get; set; }
         }
     }
 }

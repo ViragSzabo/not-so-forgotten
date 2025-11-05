@@ -1,32 +1,22 @@
+using NotSoForgottenCemetery.Features.Memories;
 using System;
 using System.Collections.Generic;
+using NotSoForgottenCemetery.Features;
 
-namespace SociallyAnxiousHub.Features
+namespace NotSoForgottenCemetery.Profile
 {
-	public class UserProfile
-	{
-		public Guid Id { get; private set; }
-		public string UserName { get; set; }
-		public MemoryBoard MemoryBoard { get; private set; }
-		public MoodTracker MoodTracker { get; private set; }
-		public HabitTracker HabitTracker { get; private set; }
-		public List<Challenge> Challenges { get; private set; }
-		public List<Badge> Badges { get; private set; }
+	public class UserProfile(string userName)
+    {
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string UserName { get; set; } = userName;
+        public MemoryBoard MemoryBoard { get; private set; } = new MemoryBoard();
+        public MoodTracker MoodTracker { get; private set; } = new MoodTracker();
+        public HabitTracker HabitTracker { get; private set; } = new HabitTracker();
+        public List<Challenge> Challenges { get; private set; } = [];
+        public List<Badge> Badges { get; private set; } = [];
 
-		// Constructor
-		public UserProfile(string userName)
-		{
-			Id = Guid.NewGuid();
-			UserName = userName;
-			MemoryBoard = new MemoryBoard();
-			MoodTracker = new MoodTracker();
-			HabitTracker = new HabitTracker();
-			Challenges = new List<Challenge>();
-			Badges = new List<Badge>();
-		}
-
-		// Methods to add challenges and badges
-		public void AddChallenge(Challenge challenge)
+        // Methods to add challenges and badges
+        public void AddChallenge(Challenge challenge)
 		{
 			Challenges.Add(challenge);
 		}
@@ -46,7 +36,7 @@ namespace SociallyAnxiousHub.Features
 		// Method to log moods
 		public void LogMood(MoodEntry moodEntry)
 		{
-			MoodTracker.LogMood(moodEntry);
+            MoodTracker.LogMood(moodEntry);
 		}
 
 		// Method to add habits
@@ -103,7 +93,7 @@ namespace SociallyAnxiousHub.Features
 		{
 			Console.WriteLine(this.ToString());
 			MemoryBoard.DisplayMemories();
-			MoodTracker.DisplayMoods();
+            MoodTracker.DisplayMoods();
 			HabitTracker.DisplayHabits();
 		}
 

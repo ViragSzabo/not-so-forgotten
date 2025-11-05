@@ -2,23 +2,13 @@ using System;
 
 namespace NotSoForgottenCemetery.Features
 {
-    public class Challenge
+    public class Challenge(string title, string description, int difficulty)
     {
-        public Guid Id { get; private set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int Difficulty { get; set; } // 1 = easy, 5 = hard
-        public bool IsCompleted { get; private set; }
-
-        // Constructor
-        public Challenge(string title, string description, int difficulty)
-        {
-            Id = Guid.NewGuid();
-            Title = title;
-            Description = description;
-            Difficulty = difficulty;
-            IsCompleted = false;
-        }
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Title { get; set; } = title;
+        public string Description { get; set; } = description;
+        public int Difficulty { get; set; } = difficulty;
+        public bool IsCompleted { get; private set; } = false;
 
         // Method to mark the challenge as completed
         public void CompleteChallenge()

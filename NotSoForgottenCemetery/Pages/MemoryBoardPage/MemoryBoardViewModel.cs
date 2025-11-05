@@ -1,6 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NotSoForgottenCemetery.Database;
+using NotSoForgottenCemetery.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 

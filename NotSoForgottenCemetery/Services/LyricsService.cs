@@ -7,7 +7,7 @@ using Microsoft.Maui.Storage;       // for SecureStorage
 using Microsoft.Maui.Dispatching;
 using Aspose.Pdf.Operators;
 
-namespace NotSoForgottenCemetery.Services.Database
+namespace NotSoForgottenCemetery.Services
 {
     // Service to fetch song lyrics from Musixmatch API
     public class LyricsService

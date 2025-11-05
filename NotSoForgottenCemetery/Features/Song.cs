@@ -1,4 +1,4 @@
-﻿using SociallyAnxiousHub.Authentication;
+﻿using NotSoForgottenCemetery.Services.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,25 +7,14 @@ using System.Threading.Tasks;
 
 namespace NotSoForgottenCemetery.Features
 {
-    class Song
+    public class Song(string title, string artist, TimeSpan duration, string album, string customImgUrl, string? spotifyUrl)
     {
-        private string _title;
-        private string _artist;
-        private string _album;
-        private TimeSpan _duration;
-        private string? _spotifyUrl;
-        private string? CustomImgUrl;
-
-        // Constructor
-        public Song(string title, string artist, TimeSpan duration, string album, TimeSpan duration, string customImgUrl, string? spotifyUrl)
-        {
-            _title = title;
-            _artist = artist;
-            _duration = duration;
-            _album = album;
-            _spotifyUrl = spotifyUrl;
-            CustomImgUrl = customImgUrl;
-        }
+        private string _title = title;
+        private string _artist = artist;
+        private string _album = album;
+        private TimeSpan _duration = duration;
+        private string? _spotifyUrl = spotifyUrl;
+        private readonly string? CustomImgUrl = customImgUrl;
 
         // Properties
         // Getters and Setters
@@ -91,7 +80,7 @@ namespace NotSoForgottenCemetery.Features
         // Overloading == and != operators
         public static bool operator ==(Song left, Song right)
         {
-            if (ReferenceEquals(left, null)) return ReferenceEquals(right, null);
+            if (left is null) return right is null;
             return left.Equals(right);
         }
 

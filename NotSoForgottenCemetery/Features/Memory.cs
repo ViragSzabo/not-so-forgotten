@@ -5,26 +5,16 @@ using System.Text;
 
 namespace NotSoForgottenCemetery.Features
 {
-    public class Memory
+    public class Memory(string title, string description, DateTime date, Song? associatedSong = null)
     {
         // Properties
-        public Guid Id { get; private set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public Song? AssociatedSong { get; set; }
-        public List<string> Tags { get; private set; }
-
-        // Constructor
-        public Memory(string title, string description, DateTime date, Song? associatedSong = null)
-        {
-            Id = Guid.NewGuid();
-            Title = title;
-            Description = description;
-            Date = date;
-            AssociatedSong = associatedSong;
-            Tags = new List<string>();
-        }
+        public Guid Id { get; private set; } = Guid.NewGuid();
+        public string Title { get; set; } = title;
+        public string Artist { get; set; }
+        public string Description { get; set; } = description;
+        public DateTime Date { get; set; } = date;
+        public Song? AssociatedSong { get; set; } = associatedSong;
+        public List<string> Tags { get; private set; } = [];
 
         // Methods to manage tags
         public void AddTag(string tag)
@@ -38,10 +28,7 @@ namespace NotSoForgottenCemetery.Features
         // Method to remove a tag
         public void RemoveTag(string tag)
         {
-            if (Tags.Contains(tag))
-            {
-                Tags.Remove(tag);
-            }
+            Tags.Remove(tag);
         }
 
         // Override ToString for easy display
