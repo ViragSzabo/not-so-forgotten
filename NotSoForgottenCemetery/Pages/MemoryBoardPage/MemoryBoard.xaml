@@ -1,0 +1,26 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NotSoForgottenCemetery.Pages.MemoryBoard"
+             x:Class="NotSoForgottenCemetery.Pages.MemoryBoard.MemoryBoardPage">
+
+    <ContentPage.BindingContext>
+        <vm:MemoryBoardViewModel />
+    </ContentPage.BindingContext>
+
+    <CollectionView ItemsSource="{Binding Memories}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <Frame Margin="10" Padding="10" CornerRadius="10" BackgroundColor="LightGray">
+                    <StackLayout>
+                        <Image Source="{Binding ImagePath}" HeightRequest="150"/>
+                        <Label Text="{Binding Title}" FontAttributes="Bold"/>
+                        <Label Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}"/>
+                        <Button Text="Delete" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=DeleteMemoryCommand}" CommandParameter="{Binding .}" />
+                    </StackLayout>
+                </Frame>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
+    <Button Text="Add Memory" Clicked="AddMemory_Clicked"/>
+</ContentPage>

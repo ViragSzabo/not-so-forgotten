@@ -1,0 +1,16 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NotSoForgottenCemetery.Pages.HomePage"
+             x:Class="NotSoForgottenCemetery.Pages.HomePage.HomePage">
+
+	<ContentPage.BindingContext>
+		<vm:HomeViewModel />
+	</ContentPage.BindingContext>
+
+	<VerticalStackLayout Padding="20" Spacing="15">
+		<Label Text="Welcome to NotSoForgottenCemetery" FontSize="24" HorizontalOptions="Center"/>
+		<Button Text="Memory Board" Command="{Binding GoToMemoryBoardCommand}"/>
+		<Button Text="Playlists" Command="{Binding GoToPlaylistsCommand}"/>
+		<Button Text="Add Habit / Challenge" IsVisible="False"/>
+	</VerticalStackLayout>
+</ContentPage>

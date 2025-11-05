@@ -1,0 +1,8 @@
+﻿USE SocialPulseDB;
+
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    UserName NVARCHAR(100) UNIQUE NOT NULL,
+    PasswordHash NVARCHAR(256) NOT NULL,
+    Salt NVARCHAR(64) NOT NULL
+);
