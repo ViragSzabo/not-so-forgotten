@@ -2,6 +2,7 @@ using NotSoForgottenCemetery.Features.Memories;
 using System;
 using System.Collections.Generic;
 using NotSoForgottenCemetery.Features;
+using NotSoForgottenCemetery.Features.HabitItems;
 
 namespace NotSoForgottenCemetery.Profile
 {

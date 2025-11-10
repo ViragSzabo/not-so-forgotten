@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace NotSoForgottenCemetery.Features
+namespace NotSoForgottenCemetery.Features.Memories
 {
     public class Memory(string title, string description, DateTime date, Song? associatedSong = null)
     {
