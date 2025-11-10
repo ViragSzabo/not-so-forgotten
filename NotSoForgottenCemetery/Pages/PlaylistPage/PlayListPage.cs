@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NotSoForgottenCemetery.Pages.PlaylistPage
+﻿namespace NotSoForgottenCemetery.Pages.PlaylistPage
 {
     public partial class PlayListPage : ContentPage
     {

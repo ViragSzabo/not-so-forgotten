@@ -10,7 +10,17 @@
         {
             InitializeComponent();
             Services = services;
-            MainPage = new AppShell();
+
+            // Temporary test page to isolate startup crash:
+            MainPage = new ContentPage
+            {
+                Content = new Label
+                {
+                    Text = "Startup test - Hello",
+                    VerticalOptions = LayoutOptions.Center,
+                    HorizontalOptions = LayoutOptions.Center
+                }
+            };
         }
     }
 }
