@@ -70,7 +70,7 @@ namespace SociallyAnxiousHub.Features
         {
             if (obj is Playlist playlist)
             {
-                return _songs.SetEquals(playlist._songs);
+                return _songs.SequenceEqual(playlist._songs);
             }
             return false;
         }

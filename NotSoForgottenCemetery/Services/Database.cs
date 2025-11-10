@@ -7,12 +7,12 @@ using SociallyAnxiousHub.Features;
 
 namespace NotSoForgottenCemetery.Services
 {
-    public class DatabaseService
+    public class Database
     {
         private readonly SQLiteAsyncConnection _database;
 
         // Constructor
-        public DatabaseService(string dbPath)
+        public Database(string dbPath)
         {
             // Ensure directory exists
             var dir = Path.GetDirectoryName(dbPath);

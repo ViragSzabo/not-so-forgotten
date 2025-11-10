@@ -4,12 +4,13 @@ using NotSoForgottenCemetery.Features;
 using NotSoForgottenCemetery.Services;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 
 namespace NotSoForgottenCemetery.Pages.PlaylistPage
 {
     public partial class PlaylistViewModel : ObservableObject
     {
-        private readonly DatabaseService _dbService;
+        private readonly Database _dbService;
         private readonly SpotifyService _spotifyService;
 
         [ObservableProperty]
@@ -18,7 +19,7 @@ namespace NotSoForgottenCemetery.Pages.PlaylistPage
         public IAsyncRelayCommand LoadPlaylistsCommand { get; }
         public IAsyncRelayCommand<PlaylistDb> OpenPlaylistCommand { get; }
 
-        public PlaylistViewModel(DatabaseService dbService, SpotifyService spotifyService)
+        public PlaylistViewModel(Database dbService, SpotifyService spotifyService)
         {
             _dbService = dbService;
             _spotifyService = spotifyService;
@@ -26,6 +27,9 @@ namespace NotSoForgottenCemetery.Pages.PlaylistPage
             LoadPlaylistsCommand = new AsyncRelayCommand(LoadPlaylistsAsync);
             OpenPlaylistCommand = new AsyncRelayCommand<PlaylistDb>(OpenPlaylistAsync);
         }
+
+        // Default constructor required for XAML previewer
+        public PlaylistViewModel() { }
 
         private async Task LoadPlaylistsAsync()
         {

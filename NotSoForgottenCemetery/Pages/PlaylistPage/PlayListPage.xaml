@@ -20,6 +20,4 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-
-    <Button Text="Add Playlist" Clicked="AddPlaylist_Clicked"/>
 </ContentPage>

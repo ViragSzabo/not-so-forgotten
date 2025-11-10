@@ -21,6 +21,4 @@
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
-
-    <Button Text="Add Memory" Clicked="AddMemory_Clicked"/>
 </ContentPage>

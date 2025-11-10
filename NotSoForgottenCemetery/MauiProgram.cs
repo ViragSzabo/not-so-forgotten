@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
-using NotSoForgottenCemetery.Database;
-using NotSoForgottenCemetery.Services.Database;
 using NotSoForgottenCemetery.Services;
 
 namespace NotSoForgottenCemetery
@@ -23,7 +21,7 @@ namespace NotSoForgottenCemetery
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "not-so-forgotten-cemetery.db3");
 
             // Register DatabaseService as a singleton
-            builder.Services.AddSingleton(sp => new DatabaseService(dbPath));
+            builder.Services.AddSingleton(sp => new Database(dbPath));
 
             // Register SpotifyService and LyricsService
             builder.Services.AddSingleton<SpotifyService>();
