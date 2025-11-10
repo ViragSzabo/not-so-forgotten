@@ -29,7 +29,7 @@ namespace NotSoForgottenCemetery.Pages.PlaylistPage
         }
 
         // Default constructor required for XAML previewer
-        public PlaylistViewModel() { }
+        public PlaylistViewModel() : this(App.Services.GetService<Database>(), App.Services.GetService<SpotifyService>()) { }
 
         private async Task LoadPlaylistsAsync()
         {

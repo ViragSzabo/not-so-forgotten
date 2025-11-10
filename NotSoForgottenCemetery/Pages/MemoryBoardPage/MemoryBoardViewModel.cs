@@ -22,7 +22,7 @@ namespace NotSoForgottenCemetery.Pages.MemoryBoard
         }
 
         // Default constructor required for XAML previewer
-        public MemoryBoardViewModel() { }
+        public MemoryBoardViewModel() : this(App.Services.GetService<Database>()) { }
 
         public IAsyncRelayCommand LoadMemoriesCommand { get; }
         public IAsyncRelayCommand<MemoryDb> DeleteMemoryCommand { get; }

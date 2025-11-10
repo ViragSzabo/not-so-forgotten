@@ -8,7 +8,10 @@ namespace NotSoForgottenCemetery
     {
         public static MauiApp CreateMauiApp()
         {
+            // Create a MAUI app builder
             var builder = MauiApp.CreateBuilder();
+
+            // Configure the app
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -20,10 +23,7 @@ namespace NotSoForgottenCemetery
             // Database path
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "not-so-forgotten-cemetery.db3");
 
-            // Register DatabaseService as a singleton
             builder.Services.AddSingleton(sp => new Database(dbPath));
-
-            // Register SpotifyService and LyricsService
             builder.Services.AddSingleton<SpotifyService>();
             builder.Services.AddSingleton(sp => new LyricsService("YOUR_MUSIXMATCH_API_KEY"));
 
@@ -31,7 +31,12 @@ namespace NotSoForgottenCemetery
             builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var app = builder.Build();
+
+            // Set the static service provider in App class
+            App.Services = app.Services;
+
+            return app;
         }
     }
 }

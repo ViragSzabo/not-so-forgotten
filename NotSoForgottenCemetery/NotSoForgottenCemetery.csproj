@@ -79,4 +79,8 @@
 	  <None Include="Pages\PlaylistPage\PlayListViewModel.cs" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
+
 </Project>
