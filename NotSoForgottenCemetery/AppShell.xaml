@@ -3,13 +3,23 @@
     x:Class="NotSoForgottenCemetery.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:NotSoForgottenCemetery"
+    xmlns:memory="clr-namespace:NotSoForgottenCemetery.Pages.MemoryBoardPage"
+    xmlns:playlist="clr-namespace:NotSoForgottenCemetery.Pages.PlaylistPage"
+    xmlns:home="clr-namespace:NotSoForgottenCemetery.Pages.HomePage"
     Shell.FlyoutBehavior="Disabled"
     Title="NotSoForgottenCemetery">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar>
+        <ShellContent
+            Title="Home"
+            ContentTemplate="{DataTemplate home:HomePage}" />
 
+        <ShellContent
+            Title="Memory Board"
+            ContentTemplate="{DataTemplate memory:MemoryBoardPage}" />
+
+        <ShellContent
+            Title="Playlists"
+            ContentTemplate="{DataTemplate playlist:PlayListPage}" />
+    </TabBar>
 </Shell>

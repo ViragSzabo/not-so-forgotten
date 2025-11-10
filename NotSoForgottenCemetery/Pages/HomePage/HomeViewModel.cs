@@ -1,10 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using Microsoft.VisualStudio.PlatformUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotSoForgottenCemetery.Pages.HomePage
 {
@@ -21,12 +16,12 @@ namespace NotSoForgottenCemetery.Pages.HomePage
 
         private async Task NavigateToMemoryBoardAsync()
         {
-            await Shell.Current.GoToAsync(nameof(MemoryBoard.MemoryBoardPage));
+            await Shell.Current.GoToAsync(nameof(MemoryBoardPage.MemoryBoardPage));
         }
 
         private async Task NavigateToPlaylistsAsync()
         {
-            await Shell.Current.GoToAsync(nameof(PlaylistPage.PlaylistPage));
+            await Shell.Current.GoToAsync(nameof(PlaylistPage.PlayListPage));
         }
     }
 }

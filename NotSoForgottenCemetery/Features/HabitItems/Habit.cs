@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace NotSoForgottenCemetery.Features.HabitItems
 {
     public class Habit(string title, string description)

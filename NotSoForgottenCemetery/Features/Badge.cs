@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NotSoForgottenCemetery.Features
+﻿namespace NotSoForgottenCemetery.Features
 {
     public class Badge
     {

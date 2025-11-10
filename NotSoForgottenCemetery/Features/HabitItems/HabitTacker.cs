@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace NotSoForgottenCemetery.Features.HabitItems
 {
     public class HabitTracker
@@ -15,7 +10,7 @@ namespace NotSoForgottenCemetery.Features.HabitItems
 
         // Method to remove a habit by its ID
         public void RemoveHabit(Guid habitId) => _habits.RemoveAll(h => h.Id == habitId);
-        
+
         // Method to get all habits
         public List<Habit> GetAllHabits() => _habits;
 

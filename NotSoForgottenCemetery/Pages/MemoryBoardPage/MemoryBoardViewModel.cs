@@ -2,8 +2,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NotSoForgottenCemetery.Services;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using NotSoForgottenCemetery.Features;
 
 namespace NotSoForgottenCemetery.Pages.MemoryBoard
 {

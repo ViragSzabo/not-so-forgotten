@@ -1,10 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using NotSoForgottenCemetery.Features;
 using NotSoForgottenCemetery.Services;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
 
 namespace NotSoForgottenCemetery.Pages.PlaylistPage
 {

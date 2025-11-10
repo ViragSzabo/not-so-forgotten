@@ -1,5 +1,3 @@
-using System;
-
 namespace NotSoForgottenCemetery.Features
 {
     public class Challenge(string title, string description, int difficulty)

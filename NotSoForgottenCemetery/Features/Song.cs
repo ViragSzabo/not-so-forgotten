@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NotSoForgottenCemetery.Services;
-
-namespace NotSoForgottenCemetery.Features
+﻿namespace NotSoForgottenCemetery.Features
 {
     public class Song(string title, string artist, TimeSpan duration, string album, string customImgUrl, string? spotifyUrl)
     {

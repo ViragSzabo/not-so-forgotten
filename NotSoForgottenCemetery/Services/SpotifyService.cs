@@ -1,19 +1,9 @@
-﻿using Microsoft.Maui.ApplicationModel;
-using Microsoft.Maui.Authentication; // MAUI Essentials WebAuthenticator
-using Microsoft.Maui.Dispatching;   // for MainThread
-using Microsoft.Maui.Storage;       // for SecureStorage
-using NotSoForgottenCemetery.Features;
-using NotSoForgottenCemetery.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using NotSoForgottenCemetery.Features;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography; // for SHA256 + RNG
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace NotSoForgottenCemetery.Services
 {

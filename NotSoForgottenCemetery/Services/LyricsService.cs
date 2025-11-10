@@ -1,11 +1,4 @@
-using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
-using Microsoft.Maui.ApplicationModel;
-using System.Security.Cryptography; // for SHA256 + RNG
-using Microsoft.Maui.Storage;       // for SecureStorage
-using Microsoft.Maui.Dispatching;
-using Aspose.Pdf.Operators;
 
 namespace NotSoForgottenCemetery.Services
 {

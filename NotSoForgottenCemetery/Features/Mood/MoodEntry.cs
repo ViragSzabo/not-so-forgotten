@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace NotSoForgottenCemetery.Features
 {
     public class MoodEntry
@@ -43,11 +38,11 @@ namespace NotSoForgottenCemetery.Features
         // Method to check if the mood level is within a healthy range
         public string GetMoodAdvice()
         {
-            if(MoodLevel >= 4 && MoodLevel <= 7)
+            if (MoodLevel >= 4 && MoodLevel <= 7)
             {
                 return "Good balance! Keep it up! There are good days and bad.";
             }
-            else if(MoodLevel < 4)
+            else if (MoodLevel < 4)
             {
                 return "It's okay to have low days. Consider reaching out to a friend or professional if needed.";
             }
