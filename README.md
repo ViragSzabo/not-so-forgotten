@@ -66,7 +66,7 @@ If you’d like to contribute to the Not-So-Forgotten Cemetery, please read the 
 ---
 
 ## ⚖️ License & Credit
-© 2025 Virág Szabó
+© 2026 Virág Szabó
 Licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.
 
 ---
