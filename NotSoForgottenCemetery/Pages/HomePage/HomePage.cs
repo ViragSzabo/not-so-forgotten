@@ -1,11 +1,14 @@
-﻿namespace NotSoForgottenCemetery.Pages.HomePage
+using Microsoft.Extensions.DependencyInjection;
+namespace NotSoForgottenCemetery.Pages.HomePage
 {
     public partial class HomePage : ContentPage
     {
-        public HomePage()
+        public HomePage(HomeViewModel viewModel)
         {
             InitializeComponent();
-            BindingContext = App.Services.GetRequiredService<NotSoForgottenCemetery.Pages.HomePage.HomeViewModel>();
+            BindingContext = viewModel;
         }
+
+        public HomePage() : this(App.Services?.GetService<HomeViewModel>()!) { }
     }
 }

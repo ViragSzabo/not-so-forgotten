@@ -1,4 +1,5 @@
 using SQLite;
+using NotSoForgottenCemetery.Models;
 
 namespace NotSoForgottenCemetery.Services
 {
@@ -6,19 +7,15 @@ namespace NotSoForgottenCemetery.Services
     {
         private readonly SQLiteAsyncConnection _database;
 
-        // Constructor
         public Database(string dbPath)
         {
-            // Ensure directory exists
             var dir = Path.GetDirectoryName(dbPath);
             if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
-            // Initialize SQLite connection
             _database = new SQLiteAsyncConnection(dbPath);
         }
 
-        // Initialize
         public async Task InitializeAsync()
         {
             try
@@ -33,7 +30,6 @@ namespace NotSoForgottenCemetery.Services
             }
             catch (Exception ex)
             {
-                // Log or handle initialization errors
                 Console.WriteLine($"Database initialization error: {ex.Message}");
             }
         }
@@ -61,82 +57,7 @@ namespace NotSoForgottenCemetery.Services
         public Task<List<PlaylistDb>> GetPlaylistsAsync() => _database.Table<PlaylistDb>().ToListAsync();
         public Task<int> DeletePlaylistAsync(PlaylistDb playlist) => _database.DeleteAsync(playlist);
 
-        // Optional: Generic method to get item by ID
-        public Task<T> GetByIdAsync<T>(int id) where T : new()
-        {
-            return _database.FindAsync<T>(id);
-        }
+        // Generic get by ID
+        public Task<T> GetByIdAsync<T>(int id) where T : new() => _database.FindAsync<T>(id);
     }
-}
-
-// Database Models
-[Table("UserProfiles")]
-public class UserProfileDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string AvatarPath { get; set; }
-}
-
-[Table("Memories")]
-public class MemoryDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public DateTime Date { get; set; }
-    public string ImagePath { get; set; }
-}
-
-[Table("Whispers")]
-public class WhisperDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public DateTime Timestamp { get; set; }
-    public string Message { get; set; }
-}
-
-[Table("Habits")]
-public class HabitDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public bool IsCompleted { get; set; }
-    public DateTime Date { get; set; }
-}
-
-[Table("Playlists")]
-public class PlaylistDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string SpotifyId { get; set; }
-}
-
-[Table("Challenges")]
-public class ChallengeDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public bool IsCompleted { get; set; }
-}
-
-[Table("Badges")]
-public class BadgeDb
-{
-    [PrimaryKey, AutoIncrement]
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public bool Unlocked { get; set; }
 }

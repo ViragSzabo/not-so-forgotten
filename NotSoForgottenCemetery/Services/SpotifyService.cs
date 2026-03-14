@@ -1,4 +1,4 @@
-﻿using NotSoForgottenCemetery.Features;
+using NotSoForgottenCemetery.Models;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Security.Cryptography; // for SHA256 + RNG
@@ -9,11 +9,11 @@ namespace NotSoForgottenCemetery.Services
 {
     public class SpotifyService
     {
-        private string _accessToken;
-        private string _refreshToken;
-        private string _codeVerifier; // PKCE code verifier
-        private string _clientId;
-        private DateTime _accessTokenExpiresAtUtc; // UTC time when token expires
+        private string _accessToken = string.Empty;
+        private string _refreshToken = string.Empty;
+        private string _codeVerifier = string.Empty;
+        private string _clientId = string.Empty;
+        private DateTime _accessTokenExpiresAtUtc;
 
         private readonly HttpClient _httpClient = new();
         private readonly SemaphoreSlim _refreshLock = new(1, 1);
@@ -31,13 +31,13 @@ namespace NotSoForgottenCemetery.Services
         // Initialize by loading client ID and refresh token from secure storage
         public async Task InitializeAsync()
         {
-            _clientId = await SecureStorage.GetAsync("spotify_client_id"); // ensure this is set during onboarding
-            _refreshToken = await SecureStorage.GetAsync("spotify_refresh_token");
+            _clientId = await SecureStorage.GetAsync("spotify_client_id") ?? string.Empty;
+            _refreshToken = await SecureStorage.GetAsync("spotify_refresh_token") ?? string.Empty;
             var expiresAt = await SecureStorage.GetAsync("spotify_access_token_expires_at_utc");
 
             if (DateTime.TryParse(expiresAt, out var dt)) _accessTokenExpiresAtUtc = dt;
 
-            _accessToken = await SecureStorage.GetAsync("spotify_access_token");
+            _accessToken = await SecureStorage.GetAsync("spotify_access_token") ?? string.Empty;
             if (!string.IsNullOrEmpty(_accessToken))
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _accessToken);
         }
@@ -76,8 +76,8 @@ namespace NotSoForgottenCemetery.Services
         // Clears stored tokens (logout)
         public async Task LogoutAsync()
         {
-            _accessToken = null;
-            _refreshToken = null;
+            _accessToken = string.Empty;
+            _refreshToken = string.Empty;
             _accessTokenExpiresAtUtc = default;
             _httpClient.DefaultRequestHeaders.Authorization = null;
 
@@ -105,9 +105,9 @@ namespace NotSoForgottenCemetery.Services
             var content = await response.Content.ReadAsStringAsync();
             var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(content);
 
-            _accessToken = tokenResponse.Access_token;
-            _refreshToken = tokenResponse.Refresh_token;
-            _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.Expires_in - 30); // buffer 30s
+            _accessToken = tokenResponse?.Access_token ?? string.Empty;
+            _refreshToken = tokenResponse?.Refresh_token ?? string.Empty;
+            _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds((tokenResponse?.Expires_in ?? 30) - 30); // buffer 30s
 
             // store securely
             await SecureStorage.SetAsync("spotify_access_token", _accessToken ?? "");
@@ -147,8 +147,8 @@ namespace NotSoForgottenCemetery.Services
                 var content = await response.Content.ReadAsStringAsync();
                 var tokenResponse = JsonSerializer.Deserialize<TokenResponse>(content);
 
-                _accessToken = tokenResponse.Access_token;
-                _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds(tokenResponse.Expires_in - 30);
+                _accessToken = tokenResponse?.Access_token ?? string.Empty;
+                _accessTokenExpiresAtUtc = DateTime.UtcNow.AddSeconds((tokenResponse?.Expires_in ?? 30) - 30);
 
                 await SecureStorage.SetAsync("spotify_access_token", _accessToken ?? "");
                 await SecureStorage.SetAsync("spotify_access_token_expires_at_utc", _accessTokenExpiresAtUtc.ToString("o"));
@@ -266,10 +266,10 @@ namespace NotSoForgottenCemetery.Services
 
         private class TokenResponse
         {
-            public string Access_token { get; set; }
-            public string Token_type { get; set; }
+            public string? Access_token { get; set; }
+            public string? Token_type { get; set; }
             public int Expires_in { get; set; }
-            public string Refresh_token { get; set; }
+            public string? Refresh_token { get; set; }
         }
     }
 }

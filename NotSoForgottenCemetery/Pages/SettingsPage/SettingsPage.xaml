@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:NotSoForgottenCemetery.Pages.SettingsPage"
+             x:Class="NotSoForgottenCemetery.Pages.SettingsPage.SettingsPage"
+             x:DataType="viewmodel:SettingsViewModel"
+             Title="Settings">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30">
+            <Label Text="API Settings" 
+                   FontSize="32" 
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <Label Text="Configure your external services below. These keys are stored securely on your device."
+                   FontSize="14"
+                   TextColor="Gray"
+                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center" />
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Spotify Client ID" FontAttributes="Bold" />
+                <Entry Text="{Binding SpotifyClientId}" 
+                       Placeholder="Enter your Spotify Client ID"
+                       BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2C}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="10">
+                <Label Text="YouTube API Key" FontAttributes="Bold" />
+                <Entry Text="{Binding YoutubeApiKey}" 
+                       Placeholder="Enter your YouTube Data API v3 Key" 
+                       IsPassword="True"
+                       BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2C}" />
+            </VerticalStackLayout>
+
+            <Button Text="Save Settings"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="#6200EE"
+                    TextColor="White"
+                    CornerRadius="10"
+                    Padding="15"
+                    HeightRequest="50" />
+
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="Green"
+                   HorizontalOptions="Center"
+                   FontAttributes="Italic" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,26 +1,33 @@
-﻿namespace NotSoForgottenCemetery
+using NotSoForgottenCemetery.Services;
+using NotSoForgottenCemetery.Models;
+using System.Threading.Tasks;
+
+namespace NotSoForgottenCemetery
 {
     public partial class App : Application
     {
         // Static service provider for dependency injection
-        public static IServiceProvider Services { get; set; }
+        public static IServiceProvider? Services { get; set; }
 
         // Constructor
-        public App(IServiceProvider services)
+        public App()
         {
             InitializeComponent();
-            Services = services;
+            MainPage = new AppShell();
 
-            // Temporary test page to isolate startup crash:
-            MainPage = new ContentPage
+            // Initialize database asynchronously to avoid UI deadlock on startup
+            Task.Run(async () =>
             {
-                Content = new Label
+                try
                 {
-                    Text = "Startup test - Hello",
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center
+                    var db = Services?.GetService<Database>();
+                    if (db != null) await db.InitializeAsync();
                 }
-            };
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Late-stage database initialization error: {ex.Message}");
+                }
+            });
         }
     }
 }

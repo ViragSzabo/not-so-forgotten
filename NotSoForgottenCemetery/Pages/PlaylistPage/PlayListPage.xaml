@@ -1,23 +1,107 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:NotSoForgottenCemetery.Pages.PlaylistPage"
-             x:Class="NotSoForgottenCemetery.Pages.PlaylistPage.PlayListPage">
+             xmlns:models="clr-namespace:NotSoForgottenCemetery.Models"
+             x:Class="NotSoForgottenCemetery.Pages.PlaylistPage.PlayListPage"
+             x:DataType="vm:PlaylistViewModel"
+             BackgroundColor="#0D0D0F"
+             Title="Autumn Melodies">
 
-    <ContentPage.BindingContext>
-        <vm:PlaylistViewModel />
-    </ContentPage.BindingContext>
+    <Grid>
+        <Image Source="mist_overlay.png" 
+               Aspect="AspectFill" 
+               Opacity="0.2" 
+               InputTransparent="True" />
 
-    <CollectionView ItemsSource="{Binding Playlists}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Margin="10" Padding="10" CornerRadius="10" BackgroundColor="Beige">
-                    <StackLayout>
-                        <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                        <Label Text="{Binding Description}"/>
-                        <Button Text="Open in Spotify" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=OpenPlaylistCommand}" CommandParameter="{Binding .}" />
-                    </StackLayout>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="25">
+                <Label Text="🍂 Autumn Melodies" 
+                       FontSize="36" 
+                       FontAttributes="Bold" 
+                       TextColor="#D4AF37" 
+                       HorizontalOptions="Center" 
+                       Margin="0,20,0,0" />
+
+                <Label Text="Curate the mists of your soul."
+                       TextColor="#A9A9A9"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       FontAttributes="Italic"
+                       Margin="0,-15,0,10"/>
+
+                <!-- Add Playlist Section -->
+                <Frame BackgroundColor="#1E1E20" Padding="15" CornerRadius="10" BorderColor="#4A4A4A">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="📜 New Selection" TextColor="#D4AF37" FontAttributes="Bold" />
+                        <Entry Text="{Binding NewPlaylistName}" Placeholder="Playlist Name..." PlaceholderColor="#696969" TextColor="White" BackgroundColor="#2D2D30" />
+                        <Entry Text="{Binding NewPlaylistDescription}" Placeholder="Description..." PlaceholderColor="#696969" TextColor="White" BackgroundColor="#2D2D30" />
+                        <Entry Text="{Binding NewPlaylistSpotifyId}" Placeholder="Spotify ID or Link..." PlaceholderColor="#696969" TextColor="White" BackgroundColor="#2D2D30" />
+                        <Button Text="Add to Collection" Command="{Binding AddPlaylistCommand}" BackgroundColor="#4A0000" TextColor="White" CornerRadius="8" />
+                    </VerticalStackLayout>
                 </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+
+                <BoxView HeightRequest="1" Color="#4A4A4A" Margin="0,10" />
+
+                <!-- Playlists List -->
+                <CollectionView ItemsSource="{Binding Playlists}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="20" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PlaylistDb">
+                            <Frame BackgroundColor="#2D2D30" 
+                                   Padding="20" 
+                                   CornerRadius="15" 
+                                   BorderColor="#4A4A4A">
+                                <Grid ColumnDefinitions="*, Auto">
+                                    <VerticalStackLayout Spacing="8">
+                                        <Label Text="{Binding Name}" 
+                                               FontSize="22" 
+                                               FontAttributes="Bold" 
+                                               TextColor="#D4AF37" />
+                                        
+                                        <Label Text="{Binding Description}" 
+                                               TextColor="#E0E0E0" 
+                                               FontSize="14" 
+                                               FontAttributes="Italic" />
+
+                                        <HorizontalStackLayout Spacing="12" Margin="0,10,0,0">
+                                            <Button Text="Spotify" 
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=OpenPlaylistCommand}" 
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="#1DB954" 
+                                                    TextColor="White" 
+                                                    FontSize="12" 
+                                                    HeightRequest="35"
+                                                    Padding="15,0"
+                                                    CornerRadius="17" />
+                                            
+                                            <Button Text="YouTube" 
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=WatchOnYouTubeCommand}" 
+                                                    CommandParameter="{Binding .}"
+                                                    BackgroundColor="#FF0000" 
+                                                    TextColor="White" 
+                                                    FontSize="12" 
+                                                    HeightRequest="35"
+                                                    Padding="15,0"
+                                                    CornerRadius="17" />
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+
+                                    <Button Grid.Column="1"
+                                            Text="❌"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=DeletePlaylistCommand}"
+                                            CommandParameter="{Binding .}"
+                                            BackgroundColor="Transparent"
+                                            VerticalOptions="Start"
+                                            WidthRequest="40"
+                                            HeightRequest="40" />
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

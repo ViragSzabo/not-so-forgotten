@@ -1,0 +1,33 @@
+## .NET / MAUI
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+
+## Publish output folders — never commit these
+publish_test/
+publish_out/
+out/
+
+## SQLite database files
+*.db
+*.db3
+*.sqlite
+*.sqlite3
+
+## NuGet
+.nuget/
+packages/
+*.nupkg
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Logs
+*.log
+NSF_Cemetery_Crash.txt

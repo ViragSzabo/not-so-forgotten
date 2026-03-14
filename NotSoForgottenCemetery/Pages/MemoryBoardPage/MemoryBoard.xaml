@@ -1,24 +1,107 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:NotSoForgottenCemetery.Pages.MemoryBoard"
-             x:Class="NotSoForgottenCemetery.Pages.MemoryBoardPage.MemoryBoardPage">
+             xmlns:models="clr-namespace:NotSoForgottenCemetery.Models"
+             xmlns:helpers="clr-namespace:NotSoForgottenCemetery.Helpers"
+             x:Class="NotSoForgottenCemetery.Pages.MemoryBoardPage.MemoryBoardPage"
+             x:DataType="vm:MemoryBoardViewModel"
+             BackgroundColor="#0D0D0F"
+             Title="The Graveyard">
 
-    <ContentPage.BindingContext>
-        <vm:MemoryBoardViewModel />
-    </ContentPage.BindingContext>
+    <Grid>
+        <Image Source="mist_overlay.png" 
+               Aspect="AspectFill" 
+               Opacity="0.2" 
+               InputTransparent="True" />
 
-    <CollectionView ItemsSource="{Binding Memories}">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Margin="10" Padding="10" CornerRadius="10" BackgroundColor="LightGray">
-                    <StackLayout>
-                        <Image Source="{Binding ImagePath}" HeightRequest="150"/>
-                        <Label Text="{Binding Title}" FontAttributes="Bold"/>
-                        <Label Text="{Binding Date, StringFormat='{0:MMM dd, yyyy}'}"/>
-                        <Button Text="Delete" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=DeleteMemoryCommand}" CommandParameter="{Binding .}" />
-                    </StackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="30">
+                <Label Text="The Eternal Graveyard" 
+                       FontSize="36" 
+                       FontAttributes="Bold" 
+                       TextColor="#D4AF37" 
+                       HorizontalOptions="Center" 
+                       Margin="0,20,0,0" />
+
+                <Label Text="Memories rest here in the eternal mist."
+                       TextColor="#A9A9A9"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       FontAttributes="Italic"
+                       Margin="0,-20,0,20"/>
+
+                <CollectionView ItemsSource="{Binding Memories}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" 
+                                         Span="2" 
+                                         HorizontalItemSpacing="15" 
+                                         VerticalItemSpacing="25" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:MemoryDb">
+                            <!-- Tombstone Card -->
+                            <VerticalStackLayout Spacing="0">
+                                <Frame BackgroundColor="#2D2D30" 
+                                       Padding="0" 
+                                       CornerRadius="40,40,5,5" 
+                                       BorderColor="#4A4A4A"
+                                       HeightRequest="240"
+                                       HasShadow="True">
+                                    <Grid RowDefinitions="120, *">
+                                        <!-- Portrait Profile -->
+                                        <Frame Grid.Row="0" Margin="10,10,10,0" Padding="0" CornerRadius="10" IsClippedToBounds="True">
+                                            <Image Source="{Binding ImagePath}" 
+                                                   Aspect="AspectFill" />
+                                        </Frame>
+
+                                        <VerticalStackLayout Grid.Row="1" Padding="15,10" Spacing="5" VerticalOptions="Center">
+                                            <Label Text="{Binding Title}" 
+                                                   FontSize="18" 
+                                                   FontAttributes="Bold" 
+                                                   TextColor="#D4AF37" 
+                                                   HorizontalOptions="Center"
+                                                   LineBreakMode="TailTruncation" />
+                                            
+                                            <Label Text="{Binding Date, StringFormat='{0:yyyy}'}" 
+                                                   FontSize="12" 
+                                                   TextColor="#A9A9A9" 
+                                                   HorizontalOptions="Center" />
+
+                                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,5,0,0">
+                                                <Button Text="🎵" 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=ListenOnSpotifyCommand}" 
+                                                        CommandParameter="{Binding .}"
+                                                        BackgroundColor="#1DB954" 
+                                                        WidthRequest="40"
+                                                        HeightRequest="40"
+                                                        CornerRadius="20"
+                                                        FontSize="16" 
+                                                        Padding="0" />
+                                                
+                                                <Button Text="📺" 
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=WatchOnYouTubeCommand}" 
+                                                        CommandParameter="{Binding .}"
+                                                        BackgroundColor="#FF0000" 
+                                                        WidthRequest="40"
+                                                        HeightRequest="40"
+                                                        CornerRadius="20"
+                                                        FontSize="16" 
+                                                        Padding="0" />
+                                            </HorizontalStackLayout>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Frame>
+                                
+                                <!-- Tombstone Base -->
+                                <BoxView Color="#1E1E20" 
+                                         HeightRequest="8" 
+                                         Margin="10,0" 
+                                         CornerRadius="2" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

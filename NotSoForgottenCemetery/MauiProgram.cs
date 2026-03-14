@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Logging;
+using System;
+using Microsoft.Extensions.Logging;
 using NotSoForgottenCemetery.Services;
+using System.IO;
 
 namespace NotSoForgottenCemetery
 {
@@ -7,10 +9,7 @@ namespace NotSoForgottenCemetery
     {
         public static MauiApp CreateMauiApp()
         {
-            // Create a MAUI app builder
             var builder = MauiApp.CreateBuilder();
-
-            // Configure the app
             builder
                 .UseMauiApp<App>()
                 .ConfigureFonts(fonts =>
@@ -19,20 +18,25 @@ namespace NotSoForgottenCemetery
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            // Database path
+            // Services, Database, and Logging
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "not-so-forgotten-cemetery.db3");
-
             builder.Services.AddSingleton(sp => new Database(dbPath));
             builder.Services.AddSingleton<SpotifyService>();
-            builder.Services.AddSingleton(sp => new LyricsService("YOUR_MUSIXMATCH_API_KEY"));
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
+            
+            // YouTubeService for searching music videos
+            builder.Services.AddSingleton<YouTubeService>();
+            
+            // Register UI Pages and ViewModels
+            builder.Services.AddTransient<Pages.HomePage.HomePage>();
+            builder.Services.AddTransient<Pages.HomePage.HomeViewModel>();
+            builder.Services.AddTransient<Pages.MemoryBoardPage.MemoryBoardPage>();
+            builder.Services.AddTransient<Pages.MemoryBoard.MemoryBoardViewModel>();
+            builder.Services.AddTransient<Pages.PlaylistPage.PlayListPage>();
+            builder.Services.AddTransient<Pages.PlaylistPage.PlaylistViewModel>();
+            builder.Services.AddTransient<Pages.SettingsPage.SettingsPage>();
+            builder.Services.AddTransient<Pages.SettingsPage.SettingsViewModel>();
 
             var app = builder.Build();
-
-            // Set the static service provider in App class
             App.Services = app.Services;
 
             return app;
