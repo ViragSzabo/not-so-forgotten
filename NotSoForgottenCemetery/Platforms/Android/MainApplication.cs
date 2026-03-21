@@ -1,7 +1,7 @@
-﻿using Android.App;
+using Android.App;
 using Android.Runtime;
 
-namespace NotSoForgottenCemetery
+namespace Cemetery
 {
     [Application]
     public class MainApplication : MauiApplication

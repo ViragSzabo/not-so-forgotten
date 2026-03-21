@@ -1,6 +1,6 @@
 using SQLite;
 
-namespace NotSoForgottenCemetery.Models
+namespace Cemetery
 {
     [Table("Memories")]
     public class MemoryDb

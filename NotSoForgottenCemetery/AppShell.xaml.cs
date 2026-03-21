@@ -1,4 +1,4 @@
-﻿namespace NotSoForgottenCemetery
+namespace Cemetery
 {
     public partial class AppShell : Shell
     {

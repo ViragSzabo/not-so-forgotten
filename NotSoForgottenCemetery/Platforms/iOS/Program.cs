@@ -1,7 +1,7 @@
-﻿using ObjCRuntime;
+using ObjCRuntime;
 using UIKit;
 
-namespace NotSoForgottenCemetery
+namespace Cemetery
 {
     public class Program
     {

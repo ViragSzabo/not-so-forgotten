@@ -1,4 +1,4 @@
-namespace NotSoForgottenCemetery.Models
+namespace Cemetery
 {
     public class Song(string title, string artist, TimeSpan duration, string album, string customImgUrl, string? spotifyUrl)
     {

@@ -1,6 +1,6 @@
 using System.Globalization;
 
-namespace NotSoForgottenCemetery.Helpers
+namespace Cemetery
 {
     public class StringNotNullOrEmptyConverter : IValueConverter
     {

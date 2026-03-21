@@ -1,16 +1,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:NotSoForgottenCemetery.Pages.SettingsPage"
-             x:Class="NotSoForgottenCemetery.Pages.SettingsPage.SettingsPage"
-             x:DataType="viewmodel:SettingsViewModel"
+             xmlns:local="clr-namespace:Cemetery"
+             x:Class="Cemetery.SettingsPage"
+             x:DataType="local:SettingsViewModel"
              BackgroundColor="{StaticResource Black}"
              Title="Configuration">
 
     <ScrollView>
         <VerticalStackLayout Spacing="32" Padding="24">
             <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                <Label Text="System Configuration" 
-                       FontSize="28" 
+                <Label Text="System Configuration"
+                       FontSize="28"
                        FontAttributes="Bold"
                        TextColor="{StaticResource Tertiary}"
                        HorizontalOptions="Center" />
@@ -22,19 +22,16 @@
                 <BoxView HeightRequest="1" WidthRequest="100" Color="{StaticResource Tertiary}" HorizontalOptions="Center" Margin="0,8,0,0"/>
             </VerticalStackLayout>
 
-            <Border Padding="20" BackgroundColor="{StaticResource Secondary}" Stroke="{StaticResource Gray600}" StrokeShape="RoundRectangle 8">
+            <Border Padding="20" BackgroundColor="{StaticResource Secondary}" StrokeShape="RoundRectangle 8">
                 <VerticalStackLayout Spacing="20">
                     <VerticalStackLayout Spacing="6">
                         <Label Text="Spotify Client ID" FontSize="12" TextColor="{StaticResource Tertiary}" FontAttributes="Bold" />
-                        <Entry Text="{Binding SpotifyClientId}" 
-                               Placeholder="Enter Client ID" />
+                        <Entry Text="{Binding SpotifyClientId}" Placeholder="Enter Client ID" TextColor="{StaticResource White}" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Spacing="6">
                         <Label Text="YouTube API Key" FontSize="12" TextColor="{StaticResource Tertiary}" FontAttributes="Bold" />
-                        <Entry Text="{Binding YoutubeApiKey}" 
-                               Placeholder="Enter API Key" 
-                               IsPassword="True" />
+                        <Entry Text="{Binding YoutubeApiKey}" Placeholder="Enter API Key" IsPassword="True" TextColor="{StaticResource White}" />
                     </VerticalStackLayout>
 
                     <Button Text="Save Configuration"
@@ -50,9 +47,9 @@
             </Border>
 
             <VerticalStackLayout Spacing="16" Margin="0,20,0,0">
-                <Label Text="About Professional Mode" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource White}" />
-                <Label Text="The application is now running in 'Modern Noir' mode, prioritizing efficiency, security, and a premium user experience." 
-                       FontSize="13" 
+                <Label Text="About" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource White}" />
+                <Label Text="Running in Modern Noir mode — prioritising efficiency, security, and a premium user experience."
+                       FontSize="13"
                        TextColor="{StaticResource MistGray}" />
             </VerticalStackLayout>
         </VerticalStackLayout>

@@ -1,6 +1,6 @@
-﻿using Foundation;
+using Foundation;
 
-namespace NotSoForgottenCemetery
+namespace Cemetery
 {
     [Register("AppDelegate")]
     public class AppDelegate : MauiUIApplicationDelegate

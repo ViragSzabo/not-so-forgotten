@@ -1,4 +1,4 @@
-namespace NotSoForgottenCemetery.Helpers
+namespace Cemetery
 {
     public static class TaskExtensions
     {

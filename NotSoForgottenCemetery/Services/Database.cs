@@ -1,56 +1,27 @@
 using SQLite;
-using NotSoForgottenCemetery.Models;
 
-namespace NotSoForgottenCemetery.Services
+namespace Cemetery
 {
     public class Database : IDatabase
     {
-        private readonly SQLiteAsyncConnection _database;
-
-        public Database(string dbPath)
-        {
-            var dir = Path.GetDirectoryName(dbPath);
-            if (!string.IsNullOrEmpty(dir) && !Directory.Exists(dir))
-                Directory.CreateDirectory(dir);
-
-            _database = new SQLiteAsyncConnection(dbPath);
-        }
+        private SQLiteAsyncConnection? _db;
+        private readonly string _path;
+        public Database(string path) => _path = path;
 
         public async Task InitializeAsync()
         {
-            try
-            {
-                await _database.CreateTableAsync<UserProfileDb>();
-                await _database.CreateTableAsync<MemoryDb>();
-                await _database.CreateTableAsync<WhisperDb>();
-                await _database.CreateTableAsync<PlaylistDb>();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Database initialization error: {ex.Message}");
-            }
+            if (_db != null) return;
+            _db = new SQLiteAsyncConnection(_path);
+            await _db.CreateTableAsync<MemoryDb>();
+            await _db.CreateTableAsync<WhisperDb>();
+            await _db.CreateTableAsync<PlaylistDb>();
         }
 
-        // MEMORY
-        public Task<int> SaveMemoryAsync(MemoryDb memory) => _database.InsertOrReplaceAsync(memory);
-        public Task<List<MemoryDb>> GetMemoriesAsync() => _database.Table<MemoryDb>().ToListAsync();
-        public Task<int> DeleteMemoryAsync(MemoryDb memory) => _database.DeleteAsync(memory);
-
-        // USER PROFILE
-        public Task<int> SaveUserProfileAsync(UserProfileDb profile) => _database.InsertOrReplaceAsync(profile);
-        public Task<List<UserProfileDb>> GetUserProfilesAsync() => _database.Table<UserProfileDb>().ToListAsync();
-
-        // WHISPER
-        public Task<int> SaveWhisperAsync(WhisperDb whisper) => _database.InsertOrReplaceAsync(whisper);
-        public Task<List<WhisperDb>> GetWhispersAsync() => _database.Table<WhisperDb>().ToListAsync();
-        public Task<int> DeleteWhisperAsync(WhisperDb whisper) => _database.DeleteAsync(whisper);
-
-        // PLAYLIST
-        public Task<int> SavePlaylistAsync(PlaylistDb playlist) => _database.InsertOrReplaceAsync(playlist);
-        public Task<List<PlaylistDb>> GetPlaylistsAsync() => _database.Table<PlaylistDb>().ToListAsync();
-        public Task<int> DeletePlaylistAsync(PlaylistDb playlist) => _database.DeleteAsync(playlist);
-
-        // Generic get by ID
-        public Task<T> GetByIdAsync<T>(int id) where T : new() => _database.FindAsync<T>(id);
+        public async Task<List<MemoryDb>> GetMemoriesAsync() => await _db!.Table<MemoryDb>().ToListAsync();
+        public async Task SaveMemoryAsync(MemoryDb m) => await _db!.InsertOrReplaceAsync(m);
+        public async Task DeleteMemoryAsync(MemoryDb m) => await _db!.DeleteAsync(m);
+        public async Task<List<PlaylistDb>> GetPlaylistsAsync() => await _db!.Table<PlaylistDb>().ToListAsync();
+        public async Task SavePlaylistAsync(PlaylistDb p) => await _db!.InsertOrReplaceAsync(p);
+        public async Task DeletePlaylistAsync(PlaylistDb p) => await _db!.DeleteAsync(p);
     }
 }

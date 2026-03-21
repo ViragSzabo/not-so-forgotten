@@ -1,35 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="NotSoForgottenCemetery.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:memory="clr-namespace:NotSoForgottenCemetery.Pages.MemoryBoardPage"
-    xmlns:playlist="clr-namespace:NotSoForgottenCemetery.Pages.PlaylistPage"
-    xmlns:home="clr-namespace:NotSoForgottenCemetery.Pages.HomePage"
-    xmlns:settings="clr-namespace:NotSoForgottenCemetery.Pages.SettingsPage"
-    xmlns:templates="clr-namespace:NotSoForgottenCemetery.Template"
-    Shell.FlyoutBehavior="Flyout"
-    Title="Not-So-Forgotten Cemetery"
-    FlyoutHeaderBehavior="CollapseOnScroll">
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Cemetery"
+       x:Class="Cemetery.AppShell"
+       Shell.FlyoutBehavior="Disabled">
 
-    <Shell.FlyoutHeader>
-        <templates:FlyoutHeader />
-    </Shell.FlyoutHeader>
-
-    <FlyoutItem Title="Radio Station" Icon="radio_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate home:HomePage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="The Graveyard" Icon="grave_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate memory:MemoryBoardPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Autumn Melodies" Icon="playlist_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate playlist:PlayListPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Settings" Icon="settings_icon.png">
-        <ShellContent ContentTemplate="{DataTemplate settings:SettingsPage}" />
-    </FlyoutItem>
+    <ShellContent Title="Home"    ContentTemplate="{DataTemplate local:HomePage}"        Route="HomePage" />
+    <ShellContent Title="Archive" ContentTemplate="{DataTemplate local:MemoryBoardPage}"  Route="MemoryBoardPage" />
+    <ShellContent Title="Music"   ContentTemplate="{DataTemplate local:PlayListPage}"     Route="PlayListPage" />
+    <ShellContent Title="Config"  ContentTemplate="{DataTemplate local:SettingsPage}"     Route="SettingsPage" />
 
 </Shell>

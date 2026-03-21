@@ -1,0 +1,1 @@
+namespace Cemetery.WinUI { public partial class App : Microsoft.Maui.MauiWinUIApplication { public App() { } protected override Microsoft.Maui.Hosting.MauiApp CreateMauiApp() => Cemetery.MauiProgram.CreateMauiApp(); } }

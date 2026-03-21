@@ -1,4 +1,4 @@
-namespace NotSoForgottenCemetery.Pages.SettingsPage
+namespace Cemetery
 {
     public partial class SettingsPage : ContentPage
     {
@@ -8,6 +8,6 @@ namespace NotSoForgottenCemetery.Pages.SettingsPage
             BindingContext = viewModel;
         }
 
-        public SettingsPage() : this(App.Services?.GetService<SettingsViewModel>()!) { }
+        public SettingsPage() : this(App.ServiceProvider?.GetService<SettingsViewModel>()!) { }
     }
 }

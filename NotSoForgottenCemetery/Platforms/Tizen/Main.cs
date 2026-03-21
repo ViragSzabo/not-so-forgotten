@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace NotSoForgottenCemetery
+namespace Cemetery
 {
     internal class Program : MauiApplication
     {
