@@ -44,11 +44,15 @@ Follow the project’s tone and design guidelines:
 
 ### 💾 4. Test Before You Commit
 
-- Make sure the app builds and runs successfully on Windows (and optionally Android).
-- Check thread synchronisation and database operations (no deadlocks or blocking UI threads).
-- Run UI/functional tests if applicable.
+- **Unit Tests**: Ensure all tests in `NotSoForgottenCemetery.Tests` pass.
+- **Manual Verification**: Make sure the app builds and runs successfully on Windows.
+- **Concurrency**: Check thread synchronisation and database operations (no deadlocks or blocking UI threads).
 
-### ✍️ 5. Commit Convention
+### 🤖 5. CI/CD Pipeline
+
+The project uses **GitHub Actions** to verify builds. Ensure your branch builds successfully in the CI environment before requesting a review.
+
+### ✍️ 6. Commit Convention
 
 Write clear and meaningful commit messages:
 

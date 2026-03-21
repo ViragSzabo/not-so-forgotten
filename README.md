@@ -26,17 +26,31 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 
 ---
 
-## 🧠 Technical Stack
-
 | Component | Technology |
 |------------|-------------|
 | Framework | .NET MAUI (.NET 8) |
-| Language | C# |
-| Database | SQLite (Async local storage) |
-| API | Spotify / YouTube Music |
-| Architecture | MVVM + Services |
-| Concurrency | Threads, Async/Await, Timers |
-| Version Control | Git + GitHub |
+| Language | C# (Modern Async/Await) |
+| Database | SQLite (Interface-based IDatabase) |
+| Architecture| MVVM + Interface-driven Services (DI) |
+| Security | SecureStorage + Input Validation |
+| CI/CD | GitHub Actions (.NET MAUI Build) |
+| Testing | xUnit + Moq (Ready) |
+
+---
+
+## Architecture & Philosophy
+
+**Not-So-Forgotten** follows professional software engineering standards:
+- **Dependency Injection**: Decoupled architecture using interfaces for all core services.
+- **Async First**: All database and network operations are fully asynchronous.
+- **Modern Noir Aesthetic**: A premium, minimalist design system (Slate, Charcoal, Muted Gold) for a professional user experience.
+
+---
+
+## 📚 Guides
+- [User Guide](USER_GUIDE.md) - How to use the app.
+- [Architecture Guide](ARCHITECTURE.md) - Technical deep dive.
+- [Security Policy](SECURITY.md) - Security and secrets management.
 
 ---
 
