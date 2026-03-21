@@ -2,7 +2,7 @@ using System.Text.Json;
 
 namespace NotSoForgottenCemetery.Services
 {
-    public class YouTubeService
+    public class YouTubeService : IYouTubeService
     {
         private readonly HttpClient _httpClient;
         private const string API_BASE_URL = "https://www.googleapis.com/youtube/v3/";

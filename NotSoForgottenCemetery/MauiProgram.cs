@@ -20,11 +20,11 @@ namespace NotSoForgottenCemetery
 
             // Services, Database, and Logging
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "not-so-forgotten-cemetery.db3");
-            builder.Services.AddSingleton(sp => new Database(dbPath));
-            builder.Services.AddSingleton<SpotifyService>();
+            builder.Services.AddSingleton<IDatabase>(sp => new Database(dbPath));
+            builder.Services.AddSingleton<ISpotifyService, SpotifyService>();
             
             // YouTubeService for searching music videos
-            builder.Services.AddSingleton<YouTubeService>();
+            builder.Services.AddSingleton<IYouTubeService, YouTubeService>();
             
             // Register UI Pages and ViewModels
             builder.Services.AddTransient<Pages.HomePage.HomePage>();

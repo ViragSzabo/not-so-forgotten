@@ -8,9 +8,9 @@ namespace NotSoForgottenCemetery.Pages.MemoryBoard
 {
     public partial class MemoryBoardViewModel : ObservableObject
     {
-        private readonly Database _dbService;
-        private readonly SpotifyService _spotifyService;
-        private readonly YouTubeService _youtubeService;
+        private readonly IDatabase _dbService;
+        private readonly ISpotifyService _spotifyService;
+        private readonly IYouTubeService _youtubeService;
 
 #pragma warning disable MVVMTK0045
         [ObservableProperty] private ObservableCollection<MemoryDb> _memories = new();
@@ -21,7 +21,7 @@ namespace NotSoForgottenCemetery.Pages.MemoryBoard
         public IAsyncRelayCommand<MemoryDb> ListenOnSpotifyCommand { get; }
         public IAsyncRelayCommand<MemoryDb> WatchOnYouTubeCommand { get; }
 
-        public MemoryBoardViewModel(Database dbService, SpotifyService spotifyService, YouTubeService youtubeService)
+        public MemoryBoardViewModel(IDatabase dbService, ISpotifyService spotifyService, IYouTubeService youtubeService)
         {
             _dbService = dbService;
             _spotifyService = spotifyService;
@@ -37,9 +37,9 @@ namespace NotSoForgottenCemetery.Pages.MemoryBoard
 
         // Default constructor for XAML
         public MemoryBoardViewModel() : this(
-            App.Services?.GetService<Database>()!,
-            App.Services?.GetService<SpotifyService>()!,
-            App.Services?.GetService<YouTubeService>()!)
+            App.Services?.GetService<IDatabase>()!,
+            App.Services?.GetService<ISpotifyService>()!,
+            App.Services?.GetService<IYouTubeService>()!)
         { }
 
         private async Task LoadMemoriesAsync()

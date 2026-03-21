@@ -9,10 +9,20 @@ namespace NotSoForgottenCemetery.Pages.HomePage
 {
     public partial class HomeViewModel : ObservableObject, IDisposable
     {
-        private readonly Database _database;
-        private readonly YouTubeService _youtubeService;
+        private readonly IDatabase _database;
+        private readonly IYouTubeService _youtubeService;
         private readonly System.Timers.Timer _clockTimer;
+        private readonly CancellationTokenSource _cts = new();
         private bool _disposed;
+
+        private static readonly string[] RadioSongs =
+        {
+            "Playing: October Rust by Type O Negative...",
+            "Playing: Disintegration by The Cure...",
+            "Playing: Black No. 1 by Type O Negative...",
+            "Playing: Lullaby by The Cure...",
+            "Playing: The Ghost In You by Psychedelic Furs..."
+        };
 
 #pragma warning disable MVVMTK0045
         [ObservableProperty] private string _clockTime = "00:00:00";
@@ -29,7 +39,7 @@ namespace NotSoForgottenCemetery.Pages.HomePage
         public IAsyncRelayCommand GoToPlaylistsCommand { get; }
         public IAsyncRelayCommand WatchOnYouTubeCommand { get; }
 
-        public HomeViewModel(Database database, YouTubeService youtubeService)
+        public HomeViewModel(IDatabase database, IYouTubeService youtubeService)
         {
             _database = database;
             _youtubeService = youtubeService;
@@ -44,57 +54,48 @@ namespace NotSoForgottenCemetery.Pages.HomePage
                 MainThread.BeginInvokeOnMainThread(() => ClockTime = DateTime.Now.ToString("HH:mm:ss"));
             _clockTimer.Start();
 
-            StartRadioStation();
-            StartMemoryWhispers();
+            StartRadioStation(_cts.Token).FireAndForgetSafeAsync();
+            StartMemoryWhispers(_cts.Token).FireAndForgetSafeAsync();
 
             LoadMemoriesAsync().FireAndForgetSafeAsync();
         }
 
-        private void StartRadioStation()
+        private async Task StartRadioStation(CancellationToken ct)
         {
-            Task.Run(async () =>
+            int index = 0;
+            while (!ct.IsCancellationRequested)
             {
-                string[] songs =
-                {
-                    "Playing: October Rust by Type O Negative...",
-                    "Playing: Disintegration by The Cure...",
-                    "Playing: Black No. 1 by Type O Negative...",
-                    "Playing: Lullaby by The Cure...",
-                    "Playing: The Ghost In You by Psychedelic Furs..."
-                };
-                int index = 0;
-                while (true)
-                {
-                    var song = songs[index];
-                    MainThread.BeginInvokeOnMainThread(() => CurrentSong = song);
-                    index = (index + 1) % songs.Length;
-                    await Task.Delay(10000);
-                }
-            });
+                var song = RadioSongs[index];
+                MainThread.BeginInvokeOnMainThread(() => CurrentSong = song);
+                index = (index + 1) % RadioSongs.Length;
+                
+                try { await Task.Delay(10000, ct); }
+                catch (TaskCanceledException) { break; }
+            }
         }
 
-        private void StartMemoryWhispers()
+        private async Task StartMemoryWhispers(CancellationToken ct)
         {
-            Task.Run(async () =>
+            while (!ct.IsCancellationRequested)
             {
-                while (true)
+                var allMemories = await _database.GetMemoriesAsync();
+                string whisper;
+                if (allMemories.Any())
                 {
-                    var allMemories = await _database.GetMemoriesAsync();
-                    string whisper;
-                    if (allMemories.Any())
-                    {
-                        var random = new Random();
-                        var randomMemory = allMemories[random.Next(allMemories.Count)];
-                        whisper = $"\"{randomMemory.Title}\" ... whispers from the mist.";
-                    }
-                    else
-                    {
-                        whisper = "The cemetery is quiet. No memories rest here yet.";
-                    }
-                    MainThread.BeginInvokeOnMainThread(() => CurrentWhisper = whisper);
-                    await Task.Delay(15000);
+                    var random = new Random();
+                    var randomMemory = allMemories[random.Next(allMemories.Count)];
+                    whisper = $"\"{randomMemory.Title}\" ... whispers from the mist.";
                 }
-            });
+                else
+                {
+                    whisper = "The cemetery is quiet. No memories rest here yet.";
+                }
+                
+                MainThread.BeginInvokeOnMainThread(() => CurrentWhisper = whisper);
+                
+                try { await Task.Delay(15000, ct); }
+                catch (TaskCanceledException) { break; }
+            }
         }
 
         private async Task LoadMemoriesAsync()
@@ -110,22 +111,36 @@ namespace NotSoForgottenCemetery.Pages.HomePage
 
         private async Task AddMemoryAsync()
         {
-            if (string.IsNullOrWhiteSpace(NewMemoryTitle) || string.IsNullOrWhiteSpace(NewMemoryDescription))
+            if (string.IsNullOrWhiteSpace(NewMemoryTitle))
+            {
+                await Shell.Current.DisplayAlert("Validation Error", "Please provide a title for the memory.", "OK");
                 return;
+            }
+
+            if (string.IsNullOrWhiteSpace(NewMemoryDescription))
+            {
+                await Shell.Current.DisplayAlert("Validation Error", "Please provide a description for the memory.", "OK");
+                return;
+            }
 
             var newMemory = new MemoryDb
             {
-                Title = NewMemoryTitle,
-                Description = NewMemoryDescription,
+                Title = NewMemoryTitle.Trim(),
+                Description = NewMemoryDescription.Trim(),
                 Date = DateTime.Now
             };
 
-            await _database.SaveMemoryAsync(newMemory);
-
-            NewMemoryTitle = string.Empty;
-            NewMemoryDescription = string.Empty;
-
-            await LoadMemoriesAsync();
+            try
+            {
+                await _database.SaveMemoryAsync(newMemory);
+                NewMemoryTitle = string.Empty;
+                NewMemoryDescription = string.Empty;
+                await LoadMemoriesAsync();
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Database Error", "Failed to save memory: " + ex.Message, "OK");
+            }
         }
 
         private async Task NavigateToMemoryBoardAsync()
@@ -139,7 +154,6 @@ namespace NotSoForgottenCemetery.Pages.HomePage
             if (string.IsNullOrWhiteSpace(CurrentSong) || CurrentSong.StartsWith("Tuning"))
                 return;
 
-            // Extract artist and title if possible, or just use the whole string
             var query = CurrentSong.Replace("Playing: ", "").Replace("...", "");
             
             var videoId = await _youtubeService.SearchVideoIdAsync(query, "");
@@ -149,7 +163,6 @@ namespace NotSoForgottenCemetery.Pages.HomePage
             }
             else
             {
-                // Fallback to general search if no direct video ID found
                 await Launcher.Default.OpenAsync($"https://www.youtube.com/results?search_query={Uri.EscapeDataString(query)}");
             }
         }
@@ -157,9 +170,13 @@ namespace NotSoForgottenCemetery.Pages.HomePage
         public void Dispose()
         {
             if (_disposed) return;
+            _cts.Cancel();
+            _cts.Dispose();
             _clockTimer.Stop();
             _clockTimer.Dispose();
             _disposed = true;
         }
+    }
+}
     }
 }

@@ -7,7 +7,7 @@ using System.Text.Json;
 
 namespace NotSoForgottenCemetery.Services
 {
-    public class SpotifyService
+    public class SpotifyService : ISpotifyService
     {
         private string _accessToken = string.Empty;
         private string _refreshToken = string.Empty;
@@ -20,7 +20,7 @@ namespace NotSoForgottenCemetery.Services
 
         private const string TOKEN_URL = "https://accounts.spotify.com/api/token";
         private const string API_BASE_URL = "https://api.spotify.com/v1/";
-        private const string REDIRECT_URI = "sociallyanxioushub://callback"; // Must be registered in Spotify Dev Dashboard
+        private const string REDIRECT_URI = "notsoforgottencemetery://callback"; // Must be registered in Spotify Dev Dashboard
 
         // Constructor
         public SpotifyService()

@@ -5,6 +5,9 @@ namespace NotSoForgottenCemetery.Pages.SettingsPage
 {
     public partial class SettingsViewModel : ObservableObject
     {
+        private readonly IDatabase _dbService;
+        private readonly ISpotifyService _spotifyService;
+
         [ObservableProperty]
         private string _spotifyClientId = string.Empty;
 
@@ -16,8 +19,15 @@ namespace NotSoForgottenCemetery.Pages.SettingsPage
 
         public IAsyncRelayCommand SaveCommand { get; }
 
-        public SettingsViewModel()
+        public SettingsViewModel() : this(
+            App.Services?.GetService<IDatabase>()!,
+            App.Services?.GetService<ISpotifyService>()!)
+        { }
+
+        public SettingsViewModel(IDatabase dbService, ISpotifyService spotifyService)
         {
+            _dbService = dbService;
+            _spotifyService = spotifyService;
             SaveCommand = new AsyncRelayCommand(SaveSettingsAsync);
             LoadSettingsAsync().ConfigureAwait(false);
         }

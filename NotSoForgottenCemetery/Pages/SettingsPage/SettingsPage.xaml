@@ -1,51 +1,60 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodel="clr-namespace:NotSoForgottenCemetery.Pages.SettingsPage"
              x:Class="NotSoForgottenCemetery.Pages.SettingsPage.SettingsPage"
              x:DataType="viewmodel:SettingsViewModel"
-             Title="Settings">
+             BackgroundColor="{StaticResource Black}"
+             Title="Configuration">
 
     <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30">
-            <Label Text="API Settings" 
-                   FontSize="32" 
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center" />
-
-            <Label Text="Configure your external services below. These keys are stored securely on your device."
-                   FontSize="14"
-                   TextColor="Gray"
-                   HorizontalOptions="Center"
-                   HorizontalTextAlignment="Center" />
-
-            <VerticalStackLayout Spacing="10">
-                <Label Text="Spotify Client ID" FontAttributes="Bold" />
-                <Entry Text="{Binding SpotifyClientId}" 
-                       Placeholder="Enter your Spotify Client ID"
-                       BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2C}" />
+        <VerticalStackLayout Spacing="32" Padding="24">
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Label Text="System Configuration" 
+                       FontSize="28" 
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Tertiary}"
+                       HorizontalOptions="Center" />
+                <Label Text="Securely manage your external service integrations."
+                       FontSize="13"
+                       TextColor="{StaticResource MistGray}"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+                <BoxView HeightRequest="1" WidthRequest="100" Color="{StaticResource Tertiary}" HorizontalOptions="Center" Margin="0,8,0,0"/>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="10">
-                <Label Text="YouTube API Key" FontAttributes="Bold" />
-                <Entry Text="{Binding YoutubeApiKey}" 
-                       Placeholder="Enter your YouTube Data API v3 Key" 
-                       IsPassword="True"
-                       BackgroundColor="{AppThemeBinding Light=#F0F0F0, Dark=#2C2C2C}" />
+            <Border Padding="20" BackgroundColor="{StaticResource Secondary}" Stroke="{StaticResource Gray600}" StrokeShape="RoundRectangle 8">
+                <VerticalStackLayout Spacing="20">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Spotify Client ID" FontSize="12" TextColor="{StaticResource Tertiary}" FontAttributes="Bold" />
+                        <Entry Text="{Binding SpotifyClientId}" 
+                               Placeholder="Enter Client ID" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="YouTube API Key" FontSize="12" TextColor="{StaticResource Tertiary}" FontAttributes="Bold" />
+                        <Entry Text="{Binding YoutubeApiKey}" 
+                               Placeholder="Enter API Key" 
+                               IsPassword="True" />
+                    </VerticalStackLayout>
+
+                    <Button Text="Save Configuration"
+                            Command="{Binding SaveCommand}"
+                            Margin="0,10,0,0" />
+
+                    <Label Text="{Binding StatusMessage}"
+                           TextColor="{StaticResource Tertiary}"
+                           FontSize="12"
+                           HorizontalOptions="Center"
+                           FontAttributes="Italic" />
+                </VerticalStackLayout>
+            </Border>
+
+            <VerticalStackLayout Spacing="16" Margin="0,20,0,0">
+                <Label Text="About Professional Mode" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource White}" />
+                <Label Text="The application is now running in 'Modern Noir' mode, prioritizing efficiency, security, and a premium user experience." 
+                       FontSize="13" 
+                       TextColor="{StaticResource MistGray}" />
             </VerticalStackLayout>
-
-            <Button Text="Save Settings"
-                    Command="{Binding SaveCommand}"
-                    BackgroundColor="#6200EE"
-                    TextColor="White"
-                    CornerRadius="10"
-                    Padding="15"
-                    HeightRequest="50" />
-
-            <Label Text="{Binding StatusMessage}"
-                   TextColor="Green"
-                   HorizontalOptions="Center"
-                   FontAttributes="Italic" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

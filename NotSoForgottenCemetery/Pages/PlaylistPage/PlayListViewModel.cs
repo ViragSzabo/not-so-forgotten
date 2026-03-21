@@ -4,13 +4,14 @@ using NotSoForgottenCemetery.Services;
 using NotSoForgottenCemetery.Models;
 using System.Collections.ObjectModel;
 
+
 namespace NotSoForgottenCemetery.Pages.PlaylistPage
 {
     public partial class PlaylistViewModel : ObservableObject
     {
-        private readonly Database _dbService;
-        private readonly SpotifyService _spotifyService;
-        private readonly YouTubeService _youtubeService;
+        private readonly IDatabase _dbService;
+        private readonly ISpotifyService _spotifyService;
+        private readonly IYouTubeService _youtubeService;
 
         [ObservableProperty] private ObservableCollection<PlaylistDb> _playlists = new();
         [ObservableProperty] private string _newPlaylistName = string.Empty;
@@ -24,7 +25,7 @@ namespace NotSoForgottenCemetery.Pages.PlaylistPage
         public IAsyncRelayCommand AddPlaylistCommand { get; }
         public IAsyncRelayCommand<PlaylistDb> DeletePlaylistCommand { get; }
 
-        public PlaylistViewModel(Database dbService, SpotifyService spotifyService, YouTubeService youtubeService)
+        public PlaylistViewModel(IDatabase dbService, ISpotifyService spotifyService, IYouTubeService youtubeService)
         {
             _dbService = dbService;
             _spotifyService = spotifyService;
@@ -42,9 +43,9 @@ namespace NotSoForgottenCemetery.Pages.PlaylistPage
 
         // Default constructor for XAML
         public PlaylistViewModel() : this(
-            App.Services?.GetService<Database>()!,
-            App.Services?.GetService<SpotifyService>()!,
-            App.Services?.GetService<YouTubeService>()!)
+            App.Services?.GetService<IDatabase>()!,
+            App.Services?.GetService<ISpotifyService>()!,
+            App.Services?.GetService<IYouTubeService>()!)
         { }
 
         private async Task LoadPlaylistsAsync()

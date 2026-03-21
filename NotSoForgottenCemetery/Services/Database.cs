@@ -3,7 +3,7 @@ using NotSoForgottenCemetery.Models;
 
 namespace NotSoForgottenCemetery.Services
 {
-    public class Database
+    public class Database : IDatabase
     {
         private readonly SQLiteAsyncConnection _database;
 
@@ -23,10 +23,7 @@ namespace NotSoForgottenCemetery.Services
                 await _database.CreateTableAsync<UserProfileDb>();
                 await _database.CreateTableAsync<MemoryDb>();
                 await _database.CreateTableAsync<WhisperDb>();
-                await _database.CreateTableAsync<HabitDb>();
                 await _database.CreateTableAsync<PlaylistDb>();
-                await _database.CreateTableAsync<ChallengeDb>();
-                await _database.CreateTableAsync<BadgeDb>();
             }
             catch (Exception ex)
             {
@@ -47,10 +44,6 @@ namespace NotSoForgottenCemetery.Services
         public Task<int> SaveWhisperAsync(WhisperDb whisper) => _database.InsertOrReplaceAsync(whisper);
         public Task<List<WhisperDb>> GetWhispersAsync() => _database.Table<WhisperDb>().ToListAsync();
         public Task<int> DeleteWhisperAsync(WhisperDb whisper) => _database.DeleteAsync(whisper);
-
-        // HABIT
-        public Task<int> SaveHabitAsync(HabitDb habit) => _database.InsertOrReplaceAsync(habit);
-        public Task<List<HabitDb>> GetHabitsAsync() => _database.Table<HabitDb>().ToListAsync();
 
         // PLAYLIST
         public Task<int> SavePlaylistAsync(PlaylistDb playlist) => _database.InsertOrReplaceAsync(playlist);
