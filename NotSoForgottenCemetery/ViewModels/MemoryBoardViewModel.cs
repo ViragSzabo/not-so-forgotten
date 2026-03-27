@@ -18,17 +18,52 @@ namespace Cemetery
 
         public MemoryBoardViewModel(IDatabase db, ISpotifyService spotify, IYouTubeService youtube)
         {
-            _db = db; _spotify = spotify; _youtube = youtube;
-            DeleteMemoryCommand = new AsyncRelayCommand<MemoryDb>(async m => { if (m != null) { await _db.DeleteMemoryAsync(m); Memories.Remove(m); } });
-            ListenOnSpotifyCommand = new AsyncRelayCommand<MemoryDb>(async m => await Launcher.Default.OpenAsync($"https://open.spotify.com/search/{Uri.EscapeDataString(m?.FavoriteSong ?? "")}"));
-            WatchOnYouTubeCommand = new AsyncRelayCommand<MemoryDb>(async m => await Launcher.Default.OpenAsync($"https://www.youtube.com/results?search_query={Uri.EscapeDataString(m?.FavoriteSong ?? "")}"));
+            _db = db;
+            _spotify = spotify;
+            _youtube = youtube;
+
+            DeleteMemoryCommand = new AsyncRelayCommand<MemoryDb>(DeleteMemoryAsync);
+            ListenOnSpotifyCommand = new AsyncRelayCommand<MemoryDb>(ListenOnSpotifyAsync);
+            WatchOnYouTubeCommand = new AsyncRelayCommand<MemoryDb>(WatchOnYouTubeAsync);
+
             _ = LoadMemoriesAsync();
         }
 
         private async Task LoadMemoriesAsync()
         {
             var items = await _db.GetMemoriesAsync();
-            MainThread.BeginInvokeOnMainThread(() => { Memories.Clear(); foreach (var m in items) Memories.Add(m); });
+            MainThread.BeginInvokeOnMainThread(() => 
+            { 
+                Memories.Clear(); 
+                foreach (var m in items) Memories.Add(m); 
+            });
+        }
+
+        private async Task DeleteMemoryAsync(MemoryDb? m)
+        {
+            if (m != null)
+            {
+                await _db.DeleteMemoryAsync(m);
+                Memories.Remove(m);
+            }
+        }
+
+        private async Task ListenOnSpotifyAsync(MemoryDb? m)
+        {
+            if (m != null)
+            {
+                var query = Uri.EscapeDataString(m.FavoriteSong ?? string.Empty);
+                await Launcher.Default.OpenAsync($"https://open.spotify.com/search/{query}");
+            }
+        }
+
+        private async Task WatchOnYouTubeAsync(MemoryDb? m)
+        {
+            if (m != null)
+            {
+                var query = Uri.EscapeDataString(m.FavoriteSong ?? string.Empty);
+                await Launcher.Default.OpenAsync($"https://www.youtube.com/results?search_query={query}");
+            }
         }
     }
 }

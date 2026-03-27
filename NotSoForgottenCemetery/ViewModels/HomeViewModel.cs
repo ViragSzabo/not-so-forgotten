@@ -75,8 +75,16 @@ namespace Cemetery
 
         private async Task AddMemoryAsync()
         {
-            if (string.IsNullOrWhiteSpace(NewMemoryTitle)) return;
-            await _database.SaveMemoryAsync(new MemoryDb { Title = NewMemoryTitle, Description = NewMemoryDescription, Date = DateTime.Now });
+            if (string.IsNullOrWhiteSpace(NewMemoryTitle) || string.IsNullOrWhiteSpace(NewMemoryDescription)) 
+                return;
+
+            await _database.SaveMemoryAsync(new MemoryDb 
+            { 
+                Title = NewMemoryTitle, 
+                Description = NewMemoryDescription, 
+                Date = DateTime.Now 
+            });
+
             NewMemoryTitle = string.Empty;
             NewMemoryDescription = string.Empty;
             await LoadMemoriesAsync();

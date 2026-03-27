@@ -28,17 +28,17 @@ public class HomeViewModelTests
     }
 
     [Fact]
-    public void Constructor_CurrentSong_DefaultsToTuningIn()
+    public void Constructor_CurrentSong_StartsPlayingFirstSong()
     {
         using var vm = CreateViewModel();
-        Assert.Equal("Tuning in...", vm.CurrentSong);
+        Assert.Equal("Playing: October Rust...", vm.CurrentSong);
     }
 
     [Fact]
-    public void Constructor_CurrentWhisper_DefaultsToQuietText()
+    public void Constructor_CurrentWhisper_EvaluatesToQuietIfNoMemories()
     {
         using var vm = CreateViewModel();
-        Assert.Equal("The mist is quiet...", vm.CurrentWhisper);
+        Assert.Equal("Quiet...", vm.CurrentWhisper);
     }
 
     [Fact]
@@ -127,6 +127,7 @@ public class HomeViewModelTests
     {
         using var vm = CreateViewModel();
         vm.NewMemoryTitle = "A Haunting Day";
+        vm.NewMemoryDescription = "The fog rolled in.";
 
         await vm.AddMemoryCommand.ExecuteAsync(null);
 
@@ -138,6 +139,7 @@ public class HomeViewModelTests
     {
         using var vm = CreateViewModel();
         vm.NewMemoryTitle = "A Timely Memory";
+        vm.NewMemoryDescription = "A description.";
         var before = DateTime.Now.AddSeconds(-1);
 
         await vm.AddMemoryCommand.ExecuteAsync(null);

@@ -34,7 +34,7 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 | Architecture| MVVM + Interface-driven Services (DI) |
 | Security | SecureStorage + Input Validation |
 | CI/CD | GitHub Actions (.NET MAUI Build) |
-| Testing | xUnit + Moq (Ready) |
+| Testing | xUnit + Moq (54 Tests Passing) |
 
 ---
 

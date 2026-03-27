@@ -38,7 +38,4 @@ namespace Cemetery
         public App() { MainPage = new AppShell(); }
     }
 
-    public interface IDatabase { Task InitializeAsync(); Task<List<MemoryDb>> GetMemoriesAsync(); Task SaveMemoryAsync(MemoryDb m); Task DeleteMemoryAsync(MemoryDb m); Task<List<PlaylistDb>> GetPlaylistsAsync(); Task SavePlaylistAsync(PlaylistDb p); Task DeletePlaylistAsync(PlaylistDb p); }
-    public interface ISpotifyService { Task InitializeAsync(); Task<bool> AuthenticateAsync(); Task LogoutAsync(); Task<List<Song>> SearchSongsAsync(string q); }
-    public interface IYouTubeService { Task<string> SearchVideoIdAsync(string q, string t); }
 }

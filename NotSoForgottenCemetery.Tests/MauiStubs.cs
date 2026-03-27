@@ -9,32 +9,9 @@
 
 using System.Collections.ObjectModel;
 
-// --- Service interfaces (normally defined in MauiProgram.cs) ---
 namespace Cemetery
 {
-    public interface IDatabase
-    {
-        Task InitializeAsync();
-        Task<List<MemoryDb>> GetMemoriesAsync();
-        Task SaveMemoryAsync(MemoryDb m);
-        Task DeleteMemoryAsync(MemoryDb m);
-        Task<List<PlaylistDb>> GetPlaylistsAsync();
-        Task SavePlaylistAsync(PlaylistDb p);
-        Task DeletePlaylistAsync(PlaylistDb p);
-    }
-
-    public interface ISpotifyService
-    {
-        Task InitializeAsync();
-        Task<bool> AuthenticateAsync();
-        Task LogoutAsync();
-        Task<List<Song>> SearchSongsAsync(string q);
-    }
-
-    public interface IYouTubeService
-    {
-        Task<string> SearchVideoIdAsync(string q, string t);
-    }
+    // interfaces are now linked from the main project's Services folder
 
     // --- Minimal App stub so ViewModels can access App.ServiceProvider ---
     public partial class App

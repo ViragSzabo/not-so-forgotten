@@ -16,12 +16,13 @@ Every major technical component (Database, Spotify, YouTube) is abstracted behin
 - **Flexibility**: The underlying implementation can change (e.g., switching from SQLite to a cloud DB) without affecting the UI.
 
 ### Dependency Injection (DI)
-Services and ViewModels are registered in the MAUI container in `MauiProgram.cs`:
-```csharp
-builder.Services.AddSingleton<IDatabase, Database>();
-builder.Services.AddSingleton<ISpotifyService, SpotifyService>();
-builder.Services.AddTransient<HomeViewModel>();
-```
+Services and ViewModels are registered in the MAUI container in `MauiProgram.cs`. All service contracts are located in the `Services/` directory for modularity.
+
+## 🧪 Quality Assurance: Unit Testing
+The project includes a comprehensive **xUnit** test suite with **54 automated tests** covering:
+- **ViewModels**: Validation of business logic and property change notifications.
+- **Service Mocking**: Using `Moq` to simulate database and external API behavior.
+- **Architecture Shims**: A `MauiStubs` system allows testing ViewModels without a live MAUI environment.
 
 ## 💾 Database Schema
 The app uses **SQLite** for lightweight, async local storage.
