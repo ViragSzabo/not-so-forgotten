@@ -49,6 +49,8 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 - [User Guide](USER_GUIDE.md) - How to use the app.
 - [Architecture Guide](ARCHITECTURE.md) - Technical deep dive.
 - [Security Policy](SECURITY.md) - Security and secrets management.
+- [Test Specification](TEST_SPECIFICATION.md) - Testing strategy and coverage.
+- [Presentation](Presentation.pptx) - Academic project presentation slides.
 
 ---
 
@@ -64,11 +66,13 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 ### 🪄 Steps
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ViragSzabo/not-so-forgotten-cemetery.git
-   cd not-so-forgotten-cemetery
-2. Open the solution file in Visual Studio.
-3. Restore dependencies and build the project.
-4. Run the app on Android, iOS, or Windows.
+   git clone https://github.com/ViragSzabo/not-so-forgotten.git
+   cd not-so-forgotten
+   ```
+2. Open `NotSoForgottenCemetery/NotSoForgottenCemetery.sln` in Visual Studio 2022.
+3. Restore NuGet dependencies: **Tools → NuGet Package Manager → Restore**.
+4. Select your target platform (Windows recommended for easiest setup) and press **Run**.
+5. _(Optional)_ Add your Spotify Client ID and YouTube API Key in the **Configuration** page for full media integration.
 
 ---
 
