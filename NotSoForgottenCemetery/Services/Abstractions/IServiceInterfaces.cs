@@ -1,4 +1,4 @@
-namespace Cemetery
+namespace Cemetery.Services.Abstractions
 {
     public interface ISpotifyService
     {
@@ -6,5 +6,10 @@ namespace Cemetery
         Task<bool> AuthenticateAsync();
         Task LogoutAsync();
         Task<List<Song>> SearchSongsAsync(string q);
+    }
+
+    public interface IYouTubeService
+    {
+        Task<string> SearchVideoIdAsync(string q, string t);
     }
 }

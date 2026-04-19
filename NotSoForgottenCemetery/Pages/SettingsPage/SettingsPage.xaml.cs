@@ -1,3 +1,5 @@
+using Cemetery.ViewModels;
+
 namespace Cemetery
 {
     public partial class SettingsPage : ContentPage

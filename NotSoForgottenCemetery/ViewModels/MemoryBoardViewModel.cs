@@ -1,8 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using Cemetery.Services.Abstractions;
 
-namespace Cemetery
+namespace Cemetery.ViewModels
 {
     public partial class MemoryBoardViewModel : ObservableObject
     {

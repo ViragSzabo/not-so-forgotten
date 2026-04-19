@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Cemetery.Services.Abstractions;
+using Cemetery.Services.Implementations;
 
-namespace Cemetery
+namespace Cemetery.ViewModels
 {
 
     public partial class SettingsViewModel : ObservableObject
@@ -51,12 +53,5 @@ namespace Cemetery
             await Task.Delay(3000);
             StatusMessage = string.Empty;
         }
-    }
-
-    /// <summary>Production implementation backed by MAUI SecureStorage.</summary>
-    internal class SecureSettingsStore : ISettingsStore
-    {
-        public Task<string?> GetAsync(string key) => SecureStorage.GetAsync(key);
-        public Task SetAsync(string key, string value) => SecureStorage.SetAsync(key, value);
     }
 }

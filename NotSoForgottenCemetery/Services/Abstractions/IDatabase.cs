@@ -1,4 +1,4 @@
-namespace Cemetery
+namespace Cemetery.Services.Abstractions
 {
     public interface IDatabase
     {

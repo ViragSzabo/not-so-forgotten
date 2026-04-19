@@ -24,6 +24,6 @@
   <ItemGroup>
     <Compile Include="..\NotSoForgottenCemetery\Models\*.cs" />
     <Compile Include="..\NotSoForgottenCemetery\ViewModels\*.cs" />
-    <Compile Include="..\NotSoForgottenCemetery\Services\*.cs" />
+    <Compile Include="..\NotSoForgottenCemetery\Services\**\*.cs" />
   </ItemGroup>
 </Project>

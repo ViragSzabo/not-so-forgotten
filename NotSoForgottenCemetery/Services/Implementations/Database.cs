@@ -1,6 +1,7 @@
 using SQLite;
+using Cemetery.Services.Abstractions;
 
-namespace Cemetery
+namespace Cemetery.Services.Implementations
 {
     public class Database : IDatabase
     {

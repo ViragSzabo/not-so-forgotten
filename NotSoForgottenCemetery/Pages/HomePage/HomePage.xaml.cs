@@ -1,3 +1,5 @@
+using Cemetery.ViewModels;
+
 namespace Cemetery
 {
     public partial class HomePage : ContentPage
@@ -21,17 +23,5 @@ namespace Cemetery
                 await CandleLabel.FadeTo(0.8 + (rng.NextDouble() * 0.2), (uint)rng.Next(100, 300));
             }
         }
-    }
-
-    public partial class MemoryBoardPage : ContentPage
-    {
-        public MemoryBoardPage(MemoryBoardViewModel vm) { InitializeComponent(); BindingContext = vm; }
-        public MemoryBoardPage() : this(App.ServiceProvider?.GetService<MemoryBoardViewModel>()!) { }
-    }
-
-    public partial class PlayListPage : ContentPage
-    {
-        public PlayListPage(PlaylistViewModel vm) { InitializeComponent(); BindingContext = vm; }
-        public PlayListPage() : this(App.ServiceProvider?.GetService<PlaylistViewModel>()!) { }
     }
 }

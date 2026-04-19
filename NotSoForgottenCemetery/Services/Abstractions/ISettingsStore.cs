@@ -1,6 +1,5 @@
-namespace Cemetery
+namespace Cemetery.Services.Abstractions
 {
-    /// <summary>Abstraction over platform secure storage, making it mockable.</summary>
     public interface ISettingsStore
     {
         Task<string?> GetAsync(string key);

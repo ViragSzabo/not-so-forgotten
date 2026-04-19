@@ -1,4 +1,6 @@
-namespace Cemetery
+using Cemetery.Services.Abstractions;
+
+namespace Cemetery.Services.Implementations
 {
     public class SpotifyService : ISpotifyService
     {

@@ -1,8 +1,9 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Cemetery"
+             xmlns:vm="clr-namespace:Cemetery.ViewModels"
              x:Class="Cemetery.MemoryBoardPage"
-             x:DataType="local:MemoryBoardViewModel"
+             x:DataType="vm:MemoryBoardViewModel"
              BackgroundColor="{StaticResource Black}"
              Title="Memory Archive">
     <Grid>
@@ -49,7 +50,7 @@
                                     <Grid ColumnDefinitions="*, *" ColumnSpacing="8" Margin="0,8,0,0">
                                         <Button Grid.Column="0"
                                                 Text="Spotify"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MemoryBoardViewModel}}, Path=ListenOnSpotifyCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=ListenOnSpotifyCommand}"
                                                 CommandParameter="{Binding .}"
                                                 BackgroundColor="{StaticResource Primary}"
                                                 TextColor="{StaticResource White}"
@@ -58,7 +59,7 @@
                                                 FontSize="11" />
                                         <Button Grid.Column="1"
                                                 Text="YouTube"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MemoryBoardViewModel}}, Path=WatchOnYouTubeCommand}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=WatchOnYouTubeCommand}"
                                                 CommandParameter="{Binding .}"
                                                 BackgroundColor="{StaticResource Primary}"
                                                 TextColor="{StaticResource White}"

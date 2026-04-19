@@ -33,7 +33,25 @@ graph TD
     style DB fill:#121212,stroke:#C5A059,color:#fff
 ```
 
-## 🏗️ Service Layer & Inversion of Control
+## 📐 Design Decisions
+
+| Decision | Rationale |
+|----------|-----------|
+| **MVVM** | Ensures the UI remains "thin" and testable. All logic resides in ViewModels, which can be fully unit-tested without a device emulator. |
+| **Dependency Injection** | Promotes loose coupling. By using a central `ServiceProvider`, we can swap service implementations without touching the ViewModels. |
+| **Interface Segregation** | Each service (Database, Spotify, YouTube) has its own interface in `Services/Abstractions/`, ensuring classes only depend on what they need. |
+
+## 🏗️ Project Structure
+
+- **`Pages/`**: XAML views and their corresponding `.xaml.cs` code-behind files.
+- **`ViewModels/`**: Orchestration logic and state management.
+- **`Services/`**: 
+    - **`Abstractions/`**: Interfaces defining the system's capabilities.
+    - **`Implementations/`**: Concrete logic for SQLite, SecureStorage, and APIs.
+- **`Models/`**: Plain C# classes for data storage.
+- **`Resources/`**: Global styles, specialized fonts, and visual assets.
+
+## 🏛️ Service Layer & Inversion of Control
 Every major technical component (Database, Spotify, YouTube) is abstracted behind an **Interface**. This allows for:
 - **Testability**: Services can be easily mocked using tools like `Moq`.
 - **Flexibility**: The underlying implementation can change (e.g., switching from SQLite to a cloud DB) without affecting the UI.
