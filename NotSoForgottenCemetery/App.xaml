@@ -4,12 +4,27 @@
              x:Class="Cemetery.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!-- Primary Noir Palette -->
+            <Color x:Key="Black">#000000</Color>
             <Color x:Key="Primary">#121212</Color>
             <Color x:Key="Secondary">#1E1E1E</Color>
-            <Color x:Key="Tertiary">#C5A059</Color>
+            <Color x:Key="Surface">#2C2C2C</Color>
+            
+            <!-- Atmospheric Accents -->
+            <Color x:Key="MutedGold">#C5A059</Color>
+            <Color x:Key="RoseGold">#A07F41</Color>
             <Color x:Key="MistGray">#9E9E9E</Color>
+            <Color x:Key="EtherealBlue">#A3C1DA</Color>
+            <Color x:Key="CrimsonLake">#4B0000</Color>
+            
+            <!-- Interaction & Text -->
             <Color x:Key="White">#FFFFFF</Color>
-            <Color x:Key="Black">#000000</Color>
+            <Color x:Key="OffWhite">#F2F2F2</Color>
+            <Color x:Key="Tertiary">#C5A059</Color> <!-- Kept for compatibility -->
+            
+            <!-- Effect Colors -->
+            <Color x:Key="CandleFlame">#FFD700</Color>
+            <Color x:Key="CandleGlow">#80FFD700</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

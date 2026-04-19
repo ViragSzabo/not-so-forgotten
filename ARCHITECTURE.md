@@ -5,10 +5,33 @@ This document provides a technical deep dive into the engineering principles and
 ---
 
 ## 🧩 Architectural Pattern: MVVM
-The project strictly follows the **Model-View-ViewModel (MVVM)** pattern to ensure a clean separation of concerns:
-- **Models**: Simple data structures (e.g., `MemoryDb`, `Song`) decorated with SQLite attributes.
-- **Views (XAML)**: Declarative UI using MAUI controls, entirely decoupled from business logic.
-- **ViewModels**: Manage application state and handle user interactions via `RelayCommand`. 
+The project is built on the **MVVM (Model-View-ViewModel)** pattern, leveraging **Dependency Injection** for clean service management and **Async/Await** for responsive multi-threading.
+
+### 🧵 Multi-Threading Architecture
+
+The following diagram illustrates how the application manages background tasks to maintain a responsive UI while simulating the atmospheric radio and memory whispers.
+
+```mermaid
+graph TD
+    UI[MAUI UI Thread] -->|Binds| VM[HomeViewModel]
+    
+    subgraph "Background Threads (Task Parallel Library)"
+        Radio[Radio Station Task]
+        Whisper[Memory Whisper Task]
+        Clock[System Clock Timer]
+    end
+    
+    Radio -->|Updates| VM
+    Whisper -->|DB Query| DB[(SQLite DB)]
+    Whisper -->|Updates| VM
+    Clock -->|Tick| VM
+    
+    VM -->|Notify Change| UI
+    
+    style Radio fill:#2c2c2c,stroke:#C5A059,color:#fff
+    style Whisper fill:#2c2c2c,stroke:#C5A059,color:#fff
+    style DB fill:#121212,stroke:#C5A059,color:#fff
+```
 
 ## 🏗️ Service Layer & Inversion of Control
 Every major technical component (Database, Spotify, YouTube) is abstracted behind an **Interface**. This allows for:

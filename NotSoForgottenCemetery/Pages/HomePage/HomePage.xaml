@@ -13,18 +13,38 @@
                        FontSize="11"
                        FontAttributes="Bold"
                        CharacterSpacing="3"
-                       TextColor="{StaticResource Tertiary}"
+                       TextColor="{StaticResource MutedGold}"
                        HorizontalOptions="Center" />
+                
+                <!-- Flickering Candle -->
+                <Grid HorizontalOptions="Center" Margin="0,5">
+                    <Label Text="🕯️" FontSize="24" x:Name="CandleLabel">
+                         <Label.Shadow>
+                            <Shadow Brush="{StaticResource CandleGlow}" Offset="0,0" Radius="15" Opacity="0.8" />
+                        </Label.Shadow>
+                    </Label>
+                </Grid>
+
                 <Label Text="{Binding ClockTime}"
                        FontSize="52"
                        FontAttributes="Bold"
                        TextColor="{StaticResource White}"
                        HorizontalOptions="Center" />
-                <Label Text="{Binding CurrentSong}"
-                       FontSize="13"
-                       TextColor="{StaticResource MistGray}"
-                       HorizontalOptions="Center"
-                       FontAttributes="Italic" />
+                
+                <!-- Signal Pulse Visualizer -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Ellipse WidthRequest="8" HeightRequest="8" Fill="{StaticResource CrimsonLake}" x:Name="SignalDot">
+                        <Ellipse.Triggers>
+                            <DataTrigger TargetType="Ellipse" Binding="{Binding IsRadioActive}" Value="True">
+                                <Setter Property="Fill" Value="{StaticResource MutedGold}" />
+                            </DataTrigger>
+                        </Ellipse.Triggers>
+                    </Ellipse>
+                    <Label Text="{Binding CurrentSong}"
+                           FontSize="13"
+                           TextColor="{StaticResource MistGray}"
+                           FontAttributes="Italic" />
+                </HorizontalStackLayout>
             </VerticalStackLayout>
         </Border>
 
@@ -90,5 +110,26 @@
 
             </VerticalStackLayout>
         </ScrollView>
+
+        <!-- Technical Monitor (Lecturer Presentation Mode) -->
+        <Border Grid.Row="1" 
+                VerticalOptions="End" 
+                BackgroundColor="{StaticResource Black}" 
+                Padding="16,8" 
+                StrokeThickness="1" 
+                Stroke="{StaticResource Surface}"
+                Margin="20,0,20,20"
+                StrokeShape="RoundRectangle 8">
+            <Grid ColumnDefinitions="*, Auto">
+                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                    <Label Text="SYSTEM MONITOR" FontSize="9" FontAttributes="Bold" CharacterSpacing="1" TextColor="{StaticResource MistGray}" />
+                    <Label Text="{Binding ThreadStatus}" FontSize="11" TextColor="{StaticResource MutedGold}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="2">
+                    <Label Text="SIGNAL" FontSize="9" FontAttributes="Bold" HorizontalOptions="End" TextColor="{StaticResource MistGray}" />
+                    <ProgressBar Progress="{Binding SignalStrength}" WidthRequest="60" ProgressColor="{StaticResource MutedGold}" HeightRequest="4" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
     </Grid>
 </ContentPage>

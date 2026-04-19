@@ -14,6 +14,10 @@ namespace Cemetery
         [ObservableProperty] private string _clockTime = "00:00:00";
         [ObservableProperty] private string _currentSong = "Tuning in...";
         [ObservableProperty] private string _currentWhisper = "The mist is quiet...";
+        [ObservableProperty] private double _signalStrength = 0.85;
+        [ObservableProperty] private string _threadStatus = "Engines warm";
+        [ObservableProperty] private bool _isRadioActive;
+        [ObservableProperty] private bool _isWhisperActive;
         [ObservableProperty] private string _newMemoryTitle = string.Empty;
         [ObservableProperty] private string _newMemoryDescription = string.Empty;
 
@@ -44,13 +48,19 @@ namespace Cemetery
 
         private async Task StartRadioStation(CancellationToken ct)
         {
-            var songs = new[] { "October Rust", "Disintegration", "Black No. 1", "Lullaby" };
+            var songs = new[] { "October Rust", "Disintegration", "Black No. 1", "Lullaby", "Nightmare" };
             int i = 0;
+            var rng = new Random();
             while (!ct.IsCancellationRequested)
             {
+                IsRadioActive = true;
+                ThreadStatus = "Radio Uplink: Active";
+                SignalStrength = 0.7 + (rng.NextDouble() * 0.3);
+                
                 CurrentSong = $"Playing: {songs[i]}...";
                 i = (i + 1) % songs.Length;
-                try { await Task.Delay(10000, ct); } catch { break; }
+                
+                try { await Task.Delay(2000, ct); IsRadioActive = false; await Task.Delay(8000, ct); } catch { break; }
             }
         }
 
@@ -58,9 +68,13 @@ namespace Cemetery
         {
             while (!ct.IsCancellationRequested)
             {
+                IsWhisperActive = true;
+                ThreadStatus = "Database Query: Scanning";
+                
                 var all = await _database.GetMemoriesAsync();
                 CurrentWhisper = all.Any() ? $"\"{all[new Random().Next(all.Count)].Title}\" ... whispers from the mist." : "Quiet...";
-                try { await Task.Delay(15000, ct); } catch { break; }
+                
+                try { await Task.Delay(3000, ct); IsWhisperActive = false; await Task.Delay(12000, ct); } catch { break; }
             }
         }
 

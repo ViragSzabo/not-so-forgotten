@@ -17,33 +17,31 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 
 ## 🧩 Features
 
-- **🎙️ Radio Station** – Background threads simulate music and message broadcasts, inspired by the spirits of the town.
-- **🪦 Digital Cemetery** – Each grave represents a stored memory in a local SQLite database.
-- **🌫️ Memory Whispers** – Threads periodically reveal a random memory as a ghostly “whisper” on screen.
-- **🕰️ Autumn Clockwork** – A real-time clock marks the passage of time, or counts down to symbolic dates.
-- **💾 Async Operations** – SQLite CRUD (Create, Read, Update, Delete) executed asynchronously.
-- **🎨 Atmospheric UI** – Gothic visuals, candle animations, and misty effects crafted for the autumn aesthetic.
+- **🎙️ Radio Station** – Background threads simulate music and message broadcasts, with real-time signal strength simulation.
+- **🪦 Digital Cemetery** – Each grave represents a stored memory in a local SQLite database with async CRUD operations.
+- **🌫️ Memory Whispers** – Periodic background scanning reveals random memories as ghostly “whispers” on screen.
+- **📊 Technical Monitor** – A built-in dashboard for lecturers to observe thread activity and signal heartbeats in real-time.
+- **🎨 Atmospheric UI** – Gothic visuals with flickering candle animations and a premium noir-inspired color palette.
 
 ---
 
 | Component | Technology |
 |------------|-------------|
 | Framework | .NET MAUI (.NET 8) |
-| Language | C# (Modern Async/Await) |
-| Database | SQLite (Interface-based IDatabase) |
-| Architecture| MVVM + Interface-driven Services (DI) |
-| Security | SecureStorage + Input Validation |
-| CI/CD | GitHub Actions (.NET MAUI Build) |
-| Testing | xUnit + Moq (54 Tests Passing) |
+| Async Logic | Task Parallel Library (TPL) + CancellationToken |
+| Database | SQLite-net-pcl (Asynchronous) |
+| Architecture| MVVM + Dependency Injection (Microsoft.Extensions.DependencyInjection) |
+| Design System| Custom Noir Palette (Gold, Charcoal, Mist) |
+| Testing | xUnit + Moq |
 
 ---
 
 ## Architecture & Philosophy
 
-**Not-So-Forgotten** follows professional software engineering standards:
-- **Dependency Injection**: Decoupled architecture using interfaces for all core services.
-- **Async First**: All database and network operations are fully asynchronous.
-- **Modern Noir Aesthetic**: A premium, minimalist design system (Slate, Charcoal, Muted Gold) for a professional user experience.
+**Not-So-Forgotten** is designed as a professional-grade demonstration of C# multi-threading:
+- **Thread Isolation**: Background tasks are decoupled from the UI thread using the Task Parallel Library and `MainThread.BeginInvokeOnMainThread`.
+- **Resource Management**: Uses `CancellationTokenSource` for clean disposal of background timers and tasks.
+- **Diagnostic Transparency**: The "System Monitor" provides a window into the application's internal state, ideal for academic presentations.
 
 ---
 
