@@ -1,0 +1,19 @@
+# ─────────────────────────────────────────────────────────────────
+# docker-compose.yml — Not-So-Forgotten Cemetery
+#
+# Usage:
+#   docker compose up --build          (run tests once, then exit)
+#   docker compose run tests bash      (open a shell for debugging)
+# ─────────────────────────────────────────────────────────────────
+
+services:
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cemetery_tests
+    # Tests run as part of the image build (RUN dotnet test …).
+    # Starting the container re-runs them with console output.
+    volumes:
+      # Mount results out so they can be inspected on the host.
+      - ./test-results:/app/test-results

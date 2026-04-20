@@ -1,4 +1,4 @@
-name: .NET MAUI Build
+name: .NET MAUI Build & Test
 
 on:
   push:
@@ -7,22 +7,52 @@ on:
     branches: [ main, master ]
 
 jobs:
-  build:
-    runs-on: windows-latest
+  # ── Job 1: Run unit tests on Linux via Docker ──────────────────
+  # The test project targets net8.0 (with MAUI stubs), so it runs
+  # perfectly in a standard SDK container without a Windows host.
+  test:
+    name: Unit Tests (Docker / Linux)
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Build & run tests inside Docker
+        run: docker build --target test -t cemetery-tests .
 
-    - name: Install MAUI Workload
-      run: dotnet workload install maui
+      - name: Extract test results from image
+        if: always()
+        run: |
+          id=$(docker create cemetery-tests)
+          docker cp "$id:/app/test-results" ./test-results || true
+          docker rm "$id"
 
-    - name: Restore Dependencies
-      run: dotnet restore NotSoForgottenCemetery/NotSoForgottenCemetery.sln
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
 
-    - name: Build Project
-      run: dotnet build NotSoForgottenCemetery/NotSoForgottenCemetery.csproj -c Release -f net8.0-windows10.0.19041.0
+  # ── Job 2: Build the MAUI app (Windows only) ───────────────────
+  build:
+    name: MAUI Build (Windows)
+    runs-on: windows-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install MAUI Workload
+        run: dotnet workload install maui
+
+      - name: Restore Dependencies
+        run: dotnet restore NotSoForgottenCemetery/NotSoForgottenCemetery.sln
+
+      - name: Build Project
+        run: dotnet build NotSoForgottenCemetery/NotSoForgottenCemetery.csproj -c Release -f net8.0-windows10.0.19041.0

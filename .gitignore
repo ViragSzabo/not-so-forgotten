@@ -31,3 +31,6 @@ desktop.ini
 ## Logs
 *.log
 NSF_Cemetery_Crash.txt
+
+## Docker / CI test output
+test-results/
