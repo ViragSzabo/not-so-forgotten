@@ -1,0 +1,38 @@
+name: Bug report
+description: Create a report to help us improve the cemetery
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please ensure you've checked the [SECURITY.md](../SECURITY.md) if this relates to credentials.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What happened? What were you trying to do?
+      placeholder: Tell us what you saw...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we summon this bug?
+      placeholder: |
+        1. Open the app
+        2. Click on...
+        3. See error
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: OS / Environment
+      options:
+        - Windows
+        - Android
+        - macOS
+        - iOS
+        - Docker (Tests only)

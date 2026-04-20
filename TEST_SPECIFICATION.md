@@ -13,6 +13,11 @@ The project employs a robust testing suite using **xUnit** and **Moq** to valida
 - **Framework**: xUnit
 - **Mocking Library**: Moq
 
+### 🐳 Docker & CI/CD Pipeline
+- **Test Environment**: Linux Docker Container (`mcr.microsoft.com/dotnet/sdk:8.0`)
+- **Isolation**: Tests are decoupled from the MAUI UI framework to run headlessly, ensuring maximum stability in CI environments.
+- **Workflow**: A two-stage GitHub Actions pipeline validates the core logic in Docker before attempting Windows-specific MAUI builds.
+
 ---
 
 ## 📋 Test Suites

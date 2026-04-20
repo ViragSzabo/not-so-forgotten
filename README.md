@@ -1,5 +1,13 @@
 # 🕯️ Not-So-Forgotten Cemetery
 
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white&style=flat-square)
+![MAUI](https://img.shields.io/badge/Framework-MAUI-512BD4?logo=dotnet&logoColor=white&style=flat-square)
+![Build](https://img.shields.io/github/actions/workflow/status/ViragSzabo/not-so-forgotten/maui_build.yml?branch=main&style=flat-square)
+![Tests](https://img.shields.io/badge/tests-54%20passing-brightgreen?style=flat-square)
+![Dependabot](https://img.shields.io/badge/dependabot-enabled-025E8C?logo=dependabot&logoColor=white&style=flat-square)
+![SQLite](https://img.shields.io/badge/Database-SQLite-07405E?logo=sqlite&logoColor=white&style=flat-square)
+![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=flat-square)
+
 _A gothic autumn radio that whispers the memories of the not-so-forgotten._
 
 ---
@@ -73,6 +81,16 @@ _“Some memories never rest — they hum, they whisper, they wait.”_
 3. Restore NuGet dependencies: **Tools → NuGet Package Manager → Restore**.
 4. Select your target platform (Windows recommended for easiest setup) and press **Run**.
 5. _(Optional)_ Add your Spotify Client ID and YouTube API Key in the **Configuration** page for full media integration.
+
+## 🐳 Running Tests (Docker)
+
+To verify the project's integrity in an isolated Linux environment without needing a MAUI setup:
+1. Ensure Docker Desktop is running.
+2. Run the following command in the terminal:
+   ```bash
+   docker compose up --build
+   ```
+3. The 54 unit tests will execute and test results will be output to the local `test-results/` folder.
 
 ---
 
