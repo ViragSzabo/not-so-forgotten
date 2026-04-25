@@ -15,7 +15,7 @@ namespace Cemetery
                 f.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-            // Database path — works correctly in packaged (Visual Studio) mode
+            // Cross-platform database path (works in both packaged and unpackaged)
             var dbPath = Path.Combine(FileSystem.AppDataDirectory, "cemetery_v3.db3");
 
             builder.Services.AddSingleton<IDatabase>(sp => new Database(dbPath));
