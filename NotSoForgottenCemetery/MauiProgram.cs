@@ -15,9 +15,8 @@ namespace Cemetery
                 f.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-            // Use standard LocalApplicationData — works for both packaged and unpackaged
-            var dbFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            var dbPath = Path.Combine(dbFolder, "cemetery_v3.db3");
+            // Database path — works correctly in packaged (Visual Studio) mode
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "cemetery_v3.db3");
 
             builder.Services.AddSingleton<IDatabase>(sp => new Database(dbPath));
             builder.Services.AddSingleton<ISpotifyService, SpotifyService>();
