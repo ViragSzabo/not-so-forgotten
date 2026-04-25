@@ -1,11 +1,33 @@
 using Cemetery.Services.Abstractions;
+using System.Text.Json;
 
 namespace Cemetery.Services.Implementations
 {
-    /// <summary>Production implementation backed by MAUI SecureStorage.</summary>
+    /// <summary>Plain JSON file store — works without MSIX package identity.</summary>
     public class SecureSettingsStore : ISettingsStore
     {
-        public Task<string?> GetAsync(string key) => SecureStorage.GetAsync(key);
-        public Task SetAsync(string key, string value) => SecureStorage.SetAsync(key, value);
+        private readonly string _path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "cemetery_settings.json");
+
+        private Dictionary<string, string> Load()
+        {
+            try { return File.Exists(_path) ? JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(_path)) ?? new() : new(); }
+            catch { return new(); }
+        }
+
+        public Task<string?> GetAsync(string key)
+        {
+            var d = Load();
+            return Task.FromResult(d.TryGetValue(key, out var v) ? v : null);
+        }
+
+        public Task SetAsync(string key, string value)
+        {
+            var d = Load();
+            d[key] = value;
+            File.WriteAllText(_path, JsonSerializer.Serialize(d));
+            return Task.CompletedTask;
+        }
     }
 }

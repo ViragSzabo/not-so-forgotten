@@ -18,11 +18,6 @@ namespace Cemetery.ViewModels
 
         public IAsyncRelayCommand SaveCommand { get; }
 
-        public SettingsViewModel() : this(
-            App.ServiceProvider?.GetService<IDatabase>()!,
-            App.ServiceProvider?.GetService<ISpotifyService>()!,
-            App.ServiceProvider?.GetService<ISettingsStore>()!) { }
-
         public SettingsViewModel(IDatabase dbService, ISpotifyService spotifyService, ISettingsStore? settings = null)
         {
             _dbService = dbService;

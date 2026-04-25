@@ -18,11 +18,42 @@ namespace Cemetery.Services.Implementations
             await _db.CreateTableAsync<PlaylistDb>();
         }
 
-        public async Task<List<MemoryDb>> GetMemoriesAsync() => await _db!.Table<MemoryDb>().ToListAsync();
-        public async Task SaveMemoryAsync(MemoryDb m) => await _db!.InsertOrReplaceAsync(m);
-        public async Task DeleteMemoryAsync(MemoryDb m) => await _db!.DeleteAsync(m);
-        public async Task<List<PlaylistDb>> GetPlaylistsAsync() => await _db!.Table<PlaylistDb>().ToListAsync();
-        public async Task SavePlaylistAsync(PlaylistDb p) => await _db!.InsertOrReplaceAsync(p);
-        public async Task DeletePlaylistAsync(PlaylistDb p) => await _db!.DeleteAsync(p);
+        private async Task EnsureInitializedAsync() => await InitializeAsync();
+
+        public async Task<List<MemoryDb>> GetMemoriesAsync()
+        {
+            await EnsureInitializedAsync();
+            return await _db!.Table<MemoryDb>().ToListAsync();
+        }
+
+        public async Task SaveMemoryAsync(MemoryDb m)
+        {
+            await EnsureInitializedAsync();
+            await _db!.InsertOrReplaceAsync(m);
+        }
+
+        public async Task DeleteMemoryAsync(MemoryDb m)
+        {
+            await EnsureInitializedAsync();
+            await _db!.DeleteAsync(m);
+        }
+
+        public async Task<List<PlaylistDb>> GetPlaylistsAsync()
+        {
+            await EnsureInitializedAsync();
+            return await _db!.Table<PlaylistDb>().ToListAsync();
+        }
+
+        public async Task SavePlaylistAsync(PlaylistDb p)
+        {
+            await EnsureInitializedAsync();
+            await _db!.InsertOrReplaceAsync(p);
+        }
+
+        public async Task DeletePlaylistAsync(PlaylistDb p)
+        {
+            await EnsureInitializedAsync();
+            await _db!.DeleteAsync(p);
+        }
     }
 }

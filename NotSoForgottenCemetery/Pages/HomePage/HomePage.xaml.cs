@@ -5,7 +5,6 @@ namespace Cemetery
     public partial class HomePage : ContentPage
     {
         public HomePage(HomeViewModel vm) { InitializeComponent(); BindingContext = vm; }
-        public HomePage() : this(App.ServiceProvider?.GetService<HomeViewModel>()!) { }
 
         protected override void OnAppearing()
         {

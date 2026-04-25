@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Logging;
 using Cemetery.Services.Abstractions;
 using Cemetery.Services.Implementations;
 using Cemetery.ViewModels;
@@ -10,15 +9,20 @@ namespace Cemetery
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            builder.UseMauiApp<App>().ConfigureFonts(f => {
+            builder.UseMauiApp<App>().ConfigureFonts(f =>
+            {
                 f.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 f.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "cemetery_v3.db3");
+            // Use standard LocalApplicationData — works for both packaged and unpackaged
+            var dbFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var dbPath = Path.Combine(dbFolder, "cemetery_v3.db3");
+
             builder.Services.AddSingleton<IDatabase>(sp => new Database(dbPath));
             builder.Services.AddSingleton<ISpotifyService, SpotifyService>();
             builder.Services.AddSingleton<IYouTubeService, YouTubeService>();
+            builder.Services.AddSingleton<ISettingsStore, SecureSettingsStore>();
 
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<HomeViewModel>();
@@ -40,5 +44,4 @@ namespace Cemetery
         public static IServiceProvider? ServiceProvider { get; set; }
         public App() { MainPage = new AppShell(); }
     }
-
 }

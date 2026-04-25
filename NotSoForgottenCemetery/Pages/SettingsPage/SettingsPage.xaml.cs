@@ -9,7 +9,5 @@ namespace Cemetery
             InitializeComponent();
             BindingContext = viewModel;
         }
-
-        public SettingsPage() : this(App.ServiceProvider?.GetService<SettingsViewModel>()!) { }
     }
 }
