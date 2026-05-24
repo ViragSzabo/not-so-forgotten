@@ -8,7 +8,7 @@ This document outlines the testing strategy and quality assurance measures imple
 The project employs a robust testing suite using **xUnit** and **Moq** to validate core logic, service layers, and ViewModel state transitions.
 
 ### Key Metrics
-- **Total Unit Tests**: 54
+- **Total Unit Tests**: 60
 - **Pass Rate**: 100%
 - **Framework**: xUnit
 - **Mocking Library**: Moq

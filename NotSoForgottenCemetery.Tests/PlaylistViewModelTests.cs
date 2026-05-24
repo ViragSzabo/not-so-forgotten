@@ -104,4 +104,82 @@ public class PlaylistViewModelTests
 
         Assert.True(raised);
     }
+
+    [Fact]
+    public void NewDescription_PropertyChanged_RaisesEvent()
+    {
+        var vm = CreateViewModel();
+        var raised = false;
+        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(vm.NewDescription)) raised = true; };
+
+        vm.NewDescription = "New desc";
+
+        Assert.True(raised);
+    }
+
+    [Fact]
+    public void NewSpotifyId_PropertyChanged_RaisesEvent()
+    {
+        var vm = CreateViewModel();
+        var raised = false;
+        vm.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(vm.NewSpotifyId)) raised = true; };
+
+        vm.NewSpotifyId = "spotify:playlist:123";
+
+        Assert.True(raised);
+    }
+
+    [Fact]
+    public async Task AddCommand_WithValidFields_SavesFullPlaylistToDatabase()
+    {
+        var vm = CreateViewModel();
+        vm.NewName = "Synthwave Nostalgia";
+        vm.NewDescription = "Retro futuristic beats.";
+        vm.NewSpotifyId = "spotify:playlist:retro";
+
+        await vm.AddCommand.ExecuteAsync(null);
+
+        _dbMock.Verify(d => d.SavePlaylistAsync(It.Is<PlaylistDb>(p =>
+            p.Name == "Synthwave Nostalgia" &&
+            p.Description == "Retro futuristic beats." &&
+            p.SpotifyId == "spotify:playlist:retro"
+        )), Times.Once);
+    }
+
+    [Fact]
+    public async Task AddCommand_WithValidFields_ClearsAllFields()
+    {
+        var vm = CreateViewModel();
+        vm.NewName = "Goth Rock";
+        vm.NewDescription = "Classic 80s goth rock.";
+        vm.NewSpotifyId = "spotify:playlist:goth";
+
+        await vm.AddCommand.ExecuteAsync(null);
+
+        Assert.Equal(string.Empty, vm.NewName);
+        Assert.Equal(string.Empty, vm.NewDescription);
+        Assert.Equal(string.Empty, vm.NewSpotifyId);
+    }
+
+    [Fact]
+    public async Task DeleteCommand_WithValidPlaylist_CallsDatabaseDelete()
+    {
+        var playlist = new PlaylistDb { Id = 1, Name = "To Delete" };
+        var vm = CreateViewModel(new List<PlaylistDb> { playlist });
+
+        await vm.DeleteCommand.ExecuteAsync(playlist);
+
+        _dbMock.Verify(d => d.DeletePlaylistAsync(playlist), Times.Once);
+    }
+
+    [Fact]
+    public async Task DeleteCommand_WithValidPlaylist_ReloadsPlaylists()
+    {
+        var playlist = new PlaylistDb { Id = 2, Name = "Reload List" };
+        var vm = CreateViewModel(new List<PlaylistDb> { playlist });
+
+        await vm.DeleteCommand.ExecuteAsync(playlist);
+
+        _dbMock.Verify(d => d.GetPlaylistsAsync(), Times.AtLeast(2));
+    }
 }

@@ -9,6 +9,6 @@ namespace Cemetery.WinUI
             DeploymentManager.Initialize(new DeploymentInitializeOptions { OnErrorShowUI = false });
         }
 
-        protected override Microsoft.Maui.Hosting.MauiApp CreateMauiApp() => Cemetery.MauiProgram.CreateMauiApp();
+        protected override Microsoft.Maui.Hosting.MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
     }
 }

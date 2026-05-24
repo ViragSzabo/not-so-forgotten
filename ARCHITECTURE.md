@@ -60,7 +60,7 @@ Every major technical component (Database, Spotify, YouTube) is abstracted behin
 Services and ViewModels are registered in the MAUI container in `MauiProgram.cs`. All service contracts are located in the `Services/` directory for modularity.
 
 ## 🧪 Quality Assurance: Unit Testing
-The project includes a comprehensive **xUnit** test suite with **54 automated tests** covering:
+The project includes a comprehensive **xUnit** test suite with **60 automated tests** covering:
 - **ViewModels**: Validation of business logic and property change notifications.
 - **Service Mocking**: Using `Moq` to simulate database and external API behavior.
 - **Architecture Shims**: A `MauiStubs` system allows testing ViewModels without a live MAUI environment.

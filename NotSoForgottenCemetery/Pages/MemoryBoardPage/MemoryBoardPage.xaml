@@ -25,49 +25,57 @@
 
                 <CollectionView ItemsSource="{Binding Memories}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical"
-                                         Span="2"
-                                         HorizontalItemSpacing="16"
-                                         VerticalItemSpacing="16" />
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="16" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="local:MemoryDb">
                             <Border BackgroundColor="{StaticResource Secondary}"
-                                    Padding="14"
-                                    StrokeThickness="0"
-                                    StrokeShape="RoundRectangle 10">
-                                <VerticalStackLayout Spacing="6">
-                                    <Label Text="{Binding Title}"
-                                           FontSize="15"
-                                           FontAttributes="Bold"
-                                           TextColor="{StaticResource White}"
-                                           HorizontalOptions="Center"
-                                           HorizontalTextAlignment="Center" />
-                                    <Label Text="{Binding Date, StringFormat='{0:MMMM yyyy}'}"
-                                           FontSize="11"
-                                           TextColor="{StaticResource MistGray}"
-                                           HorizontalOptions="Center" />
-                                    <Grid ColumnDefinitions="*, *" ColumnSpacing="8" Margin="0,8,0,0">
-                                        <Button Grid.Column="0"
-                                                Text="Spotify"
+                                    Padding="20"
+                                    StrokeThickness="1"
+                                    Stroke="{StaticResource Surface}"
+                                    StrokeShape="RoundRectangle 12">
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="8" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource White}" />
+                                        <Label Text="{Binding Date, StringFormat='{0:MMMM d, yyyy}'}"
+                                               FontSize="11"
+                                               TextColor="{StaticResource MutedGold}" />
+                                        <Label Text="{Binding Description}"
+                                               FontSize="13"
+                                               TextColor="{StaticResource OffWhite}"
+                                               LineBreakMode="WordWrap" />
+                                    </VerticalStackLayout>
+                                    
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center" WidthRequest="90">
+                                        <Button Text="Spotify"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=ListenOnSpotifyCommand}"
                                                 CommandParameter="{Binding .}"
                                                 BackgroundColor="{StaticResource Primary}"
                                                 TextColor="{StaticResource White}"
                                                 CornerRadius="6"
-                                                HeightRequest="36"
+                                                HeightRequest="32"
                                                 FontSize="11" />
-                                        <Button Grid.Column="1"
-                                                Text="YouTube"
+                                        <Button Text="YouTube"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=WatchOnYouTubeCommand}"
                                                 CommandParameter="{Binding .}"
                                                 BackgroundColor="{StaticResource Primary}"
                                                 TextColor="{StaticResource White}"
                                                 CornerRadius="6"
-                                                HeightRequest="36"
+                                                HeightRequest="32"
                                                 FontSize="11" />
-                                    </Grid>
-                                </VerticalStackLayout>
+                                        <Button Text="Delete"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:MemoryBoardViewModel}}, Path=DeleteMemoryCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource CrimsonLake}"
+                                                TextColor="{StaticResource White}"
+                                                CornerRadius="6"
+                                                HeightRequest="32"
+                                                FontSize="11" />
+                                    </VerticalStackLayout>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

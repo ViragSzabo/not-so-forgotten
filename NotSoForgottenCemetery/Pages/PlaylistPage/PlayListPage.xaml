@@ -6,45 +6,116 @@
              x:DataType="vm:PlaylistViewModel"
              BackgroundColor="{StaticResource Black}"
              Title="Music Repository">
-    <VerticalStackLayout Padding="24" Spacing="24">
-        <VerticalStackLayout Spacing="8">
-            <Label Text="Curated Playlists"
-                   FontSize="30"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource Tertiary}" />
-            <Label Text="Your music, thoughtfully organised."
-                   FontSize="13"
-                   TextColor="{StaticResource MistGray}"
-                   FontAttributes="Italic" />
-            <BoxView HeightRequest="1" Color="{StaticResource Tertiary}" Margin="0,4,0,0"/>
-        </VerticalStackLayout>
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header -->
+        <Border Grid.Row="0" BackgroundColor="{StaticResource Secondary}" Padding="24,20" StrokeThickness="0">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="MUSIC REPOSITORY"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       CharacterSpacing="3"
+                       TextColor="{StaticResource MutedGold}"
+                       HorizontalOptions="Center" />
+                <Label Text="Curated Playlists"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource White}"
+                       HorizontalOptions="Center" />
+                <Label Text="Your music, thoughtfully organised."
+                       FontSize="13"
+                       TextColor="{StaticResource MistGray}"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Border>
 
-        <CollectionView ItemsSource="{Binding Playlists}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="local:PlaylistDb">
-                    <Border BackgroundColor="{StaticResource Secondary}"
-                            Margin="0,0,0,12"
-                            Padding="18"
-                            StrokeThickness="0"
-                            StrokeShape="RoundRectangle 10">
-                        <Grid ColumnDefinitions="*, Auto">
-                            <VerticalStackLayout Grid.Column="0" Spacing="2">
-                                <Label Text="{Binding Name}"
-                                       FontSize="17"
-                                       FontAttributes="Bold"
-                                       TextColor="{StaticResource White}" />
-                            </VerticalStackLayout>
-                            <Button Grid.Column="1"
-                                    Text="▶ Listen"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=OpenCommand}"
-                                    CommandParameter="{Binding .}"
-                                    BackgroundColor="{StaticResource Primary}"
-                                    TextColor="{StaticResource White}"
-                                    CornerRadius="6" />
+        <!-- Body -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24" Spacing="24">
+                <!-- Add Playlist Panel -->
+                <Border BackgroundColor="{StaticResource Secondary}" Padding="24" StrokeThickness="1" Stroke="{StaticResource Surface}" StrokeShape="RoundRectangle 12">
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="Add Curated Playlist"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               TextColor="{StaticResource Tertiary}" />
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="12">
+                            <Entry Grid.Column="0"
+                                   Placeholder="Playlist Name"
+                                   Text="{Binding NewName}"
+                                   TextColor="{StaticResource White}"
+                                   PlaceholderColor="{StaticResource MistGray}" />
+                            <Entry Grid.Column="1"
+                                   Placeholder="Spotify Link / ID"
+                                   Text="{Binding NewSpotifyId}"
+                                   TextColor="{StaticResource White}"
+                                   PlaceholderColor="{StaticResource MistGray}" />
                         </Grid>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </VerticalStackLayout>
+                        <Editor Placeholder="Playlist Description..."
+                                Text="{Binding NewDescription}"
+                                HeightRequest="60"
+                                TextColor="{StaticResource White}"
+                                PlaceholderColor="{StaticResource MistGray}" />
+                        <Button Text="Save to Repository"
+                                Command="{Binding AddCommand}"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="{StaticResource White}"
+                                CornerRadius="8" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Divider -->
+                <BoxView HeightRequest="1" Color="{StaticResource Surface}" />
+
+                <!-- Playlists List -->
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Playlists}" Spacing="16">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="local:PlaylistDb">
+                            <Border BackgroundColor="{StaticResource Secondary}"
+                                    Padding="20"
+                                    StrokeThickness="1"
+                                    Stroke="{StaticResource Surface}"
+                                    StrokeShape="RoundRectangle 12">
+                                <Grid ColumnDefinitions="*, Auto" ColumnSpacing="16">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="6" VerticalOptions="Center">
+                                        <Label Text="{Binding Name}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource White}" />
+                                        <Label Text="{Binding Description}"
+                                               FontSize="13"
+                                               TextColor="{StaticResource OffWhite}"
+                                               LineBreakMode="WordWrap" />
+                                        <Label Text="{Binding SpotifyId, StringFormat='ID: {0}'}"
+                                               FontSize="11"
+                                               TextColor="{StaticResource MistGray}"
+                                               LineBreakMode="NoWrap" />
+                                    </VerticalStackLayout>
+                                    
+                                    <VerticalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center" WidthRequest="90">
+                                        <Button Text="Listen"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=OpenCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource Primary}"
+                                                TextColor="{StaticResource White}"
+                                                CornerRadius="6"
+                                                HeightRequest="32"
+                                                FontSize="11" />
+                                        <Button Text="Delete"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PlaylistViewModel}}, Path=DeleteCommand}"
+                                                CommandParameter="{Binding .}"
+                                                BackgroundColor="{StaticResource CrimsonLake}"
+                                                TextColor="{StaticResource White}"
+                                                CornerRadius="6"
+                                                HeightRequest="32"
+                                                FontSize="11" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

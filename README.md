@@ -3,7 +3,7 @@
 ![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet&logoColor=white&style=flat-square)
 ![MAUI](https://img.shields.io/badge/Framework-MAUI-512BD4?logo=dotnet&logoColor=white&style=flat-square)
 ![Build](https://img.shields.io/github/actions/workflow/status/ViragSzabo/not-so-forgotten/maui_build.yml?branch=main&style=flat-square)
-![Tests](https://img.shields.io/badge/tests-54%20passing-brightgreen?style=flat-square)
+![Tests](https://img.shields.io/badge/tests-60%20passing-brightgreen?style=flat-square)
 ![Dependabot](https://img.shields.io/badge/dependabot-enabled-025E8C?logo=dependabot&logoColor=white&style=flat-square)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-07405E?logo=sqlite&logoColor=white&style=flat-square)
 ![License](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg?style=flat-square)
@@ -90,7 +90,7 @@ To verify the project's integrity in an isolated Linux environment without needi
    ```bash
    docker compose up --build
    ```
-3. The 54 unit tests will execute and test results will be output to the local `test-results/` folder.
+3. The 60 unit tests will execute and test results will be output to the local `test-results/` folder.
 
 ---
 

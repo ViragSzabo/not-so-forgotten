@@ -1,3 +1,5 @@
+#pragma warning disable MVVMTK0045
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -34,8 +36,8 @@ namespace Cemetery.ViewModels
             _database = database;
             _youtubeService = youtubeService;
             AddMemoryCommand = new AsyncRelayCommand(AddMemoryAsync);
-            GoToMemoryBoardCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync("MemoryBoardPage"));
-            GoToPlaylistsCommand = new AsyncRelayCommand(() => Shell.Current.GoToAsync("PlayListPage"));
+            GoToMemoryBoardCommand = new AsyncRelayCommand(() => Shell.Current?.GoToAsync("MemoryBoardPage") ?? Task.CompletedTask);
+            GoToPlaylistsCommand = new AsyncRelayCommand(() => Shell.Current?.GoToAsync("PlayListPage") ?? Task.CompletedTask);
             WatchOnYouTubeCommand = new AsyncRelayCommand(WatchOnYouTubeAsync);
 
             _clockTimer = new System.Timers.Timer(1000);
