@@ -6,7 +6,7 @@ namespace Cemetery.WinUI
     {
         public App()
         {
-            DeploymentManager.Initialize(new DeploymentInitializeOptions { OnErrorShowUI = false });
+            // DeploymentManager requires package identity - skip for unpackaged development
         }
 
         protected override Microsoft.Maui.Hosting.MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
